@@ -1,5 +1,5 @@
 //
-//  AppDelegate.h
+//  AIQAppDelegate.h
 //  Anniversary
 //
 //  Created by 小希 on 2017/8/31.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AIQAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

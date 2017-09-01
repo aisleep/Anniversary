@@ -1,22 +1,29 @@
 //
-//  AppDelegate.m
+//  AIQAppDelegate.m
 //  Anniversary
 //
 //  Created by 小希 on 2017/8/31.
 //  Copyright © 2017年 小希. All rights reserved.
 //
 
-#import "AppDelegate.h"
+#import "AIQAppDelegate.h"
+#import "AIQTabBarController.h"
 
-@interface AppDelegate ()
+@interface AIQAppDelegate ()
 
 @end
 
-@implementation AppDelegate
+@implementation AIQAppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    AIQTabBarController *tabBarController = [[AIQTabBarController alloc] init];
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.backgroundColor = [UIColor whiteColor];
+    self.window.rootViewController = tabBarController;
+    [self.window makeKeyAndVisible];
+    
     return YES;
 }
 
@@ -46,6 +53,5 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
-
 
 @end

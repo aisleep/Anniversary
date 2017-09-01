@@ -11,6 +11,8 @@ pod 'FMDB'
 pod 'SDWebImage'
 pod 'MBProgressHUD'
 #pod 'CocoaAsyncSocket'
+pod 'CocoaLumberjack'
 pod 'Masonry'
+pod 'DACircularProgress'
 
 end
