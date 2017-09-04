@@ -9,7 +9,6 @@
 #import "AIQAlbumsService.h"
 #import <Photos/Photos.h>
 
-
 @implementation AIQAlbumsService
 
 + (void)queryPhotoLibraryAuthorizationStatus:(AIQBoolResultBlock)result {
@@ -39,7 +38,7 @@
     }
 }
 
-+ (void)fetchAllPhotoAlbums:(void (^)(NSArray<PHAssetCollection *> * _Nonnull, NSArray<PHAssetCollection *> * _Nonnull))result {
++ (void)fetchAllPhotoAlbums:(void (^)(NSArray<AIQAlbum *> * _Nonnull, NSArray<AIQAlbum *> * _Nonnull))result {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         PHFetchOptions *albumOptions = [[PHFetchOptions alloc] init];
         albumOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"endDate" ascending:YES]];
@@ -50,18 +49,20 @@
         
         NSMutableArray *systemAlbums = [NSMutableArray array];
         NSMutableArray *customAlbums = [NSMutableArray array];
-        DDLogDebug(@"[PHAssetCollectionTypeSmartAlbum] ==================");
+        DDLogInfo(@"[PHAssetCollectionTypeSmartAlbum] ==================");
         [smartAlbumResult enumerateObjectsUsingBlock:^(PHAssetCollection * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if (obj.estimatedAssetCount > 0 && obj.estimatedAssetCount != NSNotFound) {
-                [systemAlbums addObject:obj];
+            AIQAlbum *album = [self transformPHAssetCollectionIntoAIQAlbums:obj];
+            if (album) {
+                [systemAlbums addObject:album];
             }
             DDLogDebug(@"[albums name:%@ subtype:%ld count:%ld]", obj.localizedTitle, obj.assetCollectionSubtype, obj.estimatedAssetCount);
         }];
         
         DDLogDebug(@"[PHAssetCollectionTypeAlbum] ==================");
         [customAlbumResult enumerateObjectsUsingBlock:^(PHAssetCollection * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if (obj.estimatedAssetCount > 0 && obj.estimatedAssetCount != NSNotFound) {
-                [customAlbums addObject:obj];
+            AIQAlbum *album = [self transformPHAssetCollectionIntoAIQAlbums:obj];
+            if (album) {
+                [customAlbums addObject:album];
             }
             DDLogDebug(@"[albums name:%@ subtype:%ld count:%ld]", obj.localizedTitle, obj.assetCollectionSubtype, obj.estimatedAssetCount);
         }];
@@ -71,6 +72,19 @@
             }
         });
     });
+}
+
++ (AIQAlbum *)transformPHAssetCollectionIntoAIQAlbums:(PHAssetCollection *)assetCollection {
+    PHFetchResult<PHAsset *> *fetchResult = [PHAsset fetchAssetsInAssetCollection:assetCollection options:nil];
+    if (fetchResult.count == 0) {
+        return nil;
+    }
+    AIQAlbum *album = [[AIQAlbum alloc] init];
+    album.localIdentifier = assetCollection.localIdentifier;
+    album.title = assetCollection.localizedTitle;
+    album.photoCount = fetchResult.count;
+    album.assetCollection = assetCollection;
+    return album;
 }
 
 + (void)fetchAllPhotoAssetsInAlbum:(PHAssetCollection *)album completeHandler:(void (^)(NSArray<PHAsset *> * _Nonnull))result {

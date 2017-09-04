@@ -16,6 +16,7 @@
 
 @property (nonatomic) BOOL emptyImage;
 @property (nonatomic) BOOL isVideo;
+@property (nonatomic) BOOL isThumbnail; //是否是只需获取缩略图
 
 @property (nonatomic, copy) NSString *localIdentifier;  //本地标识
 

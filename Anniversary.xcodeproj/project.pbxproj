@@ -36,6 +36,17 @@
 		AA6982041F595CD800BCF551 /* MWTapDetectingView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6981F91F595CD800BCF551 /* MWTapDetectingView.m */; };
 		AA6982051F595CD800BCF551 /* MWZoomingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6981FB1F595CD800BCF551 /* MWZoomingScrollView.m */; };
 		AA6982061F595CD800BCF551 /* UIImage+MWPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6981FD1F595CD800BCF551 /* UIImage+MWPhotoBrowser.m */; };
+		AA6982121F5CF23000BCF551 /* AIQAlbumController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6982111F5CF23000BCF551 /* AIQAlbumController.m */; };
+		AA6982151F5CF40300BCF551 /* AIQTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6982141F5CF40300BCF551 /* AIQTableViewController.m */; };
+		AA6982181F5CF41B00BCF551 /* AIQCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6982171F5CF41B00BCF551 /* AIQCollectionViewController.m */; };
+		AA69821C1F5CF48D00BCF551 /* AIQTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA69821B1F5CF48D00BCF551 /* AIQTableView.m */; };
+		AA69821F1F5CF4A300BCF551 /* AIQCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA69821E1F5CF4A300BCF551 /* AIQCollectionView.m */; };
+		AA6982221F5CF56000BCF551 /* AIQTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6982211F5CF56000BCF551 /* AIQTableViewCell.m */; };
+		AA6982251F5D05C900BCF551 /* AIQCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6982241F5D05C900BCF551 /* AIQCollectionViewCell.m */; };
+		AA6982281F5D3BD900BCF551 /* AIQAlbumViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6982271F5D3BD900BCF551 /* AIQAlbumViewModel.m */; };
+		AA69822B1F5D49E000BCF551 /* AIQPhotoThumbnailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AA69822A1F5D49E000BCF551 /* AIQPhotoThumbnailCell.m */; };
+		AA69822E1F5D519800BCF551 /* AIQAlbumSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA69822D1F5D519800BCF551 /* AIQAlbumSelectView.m */; };
+		AA6982311F5D548400BCF551 /* AIQAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6982301F5D548400BCF551 /* AIQAlbum.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,6 +110,28 @@
 		AA6981FB1F595CD800BCF551 /* MWZoomingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWZoomingScrollView.m; sourceTree = "<group>"; };
 		AA6981FC1F595CD800BCF551 /* UIImage+MWPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MWPhotoBrowser.h"; sourceTree = "<group>"; };
 		AA6981FD1F595CD800BCF551 /* UIImage+MWPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+MWPhotoBrowser.m"; sourceTree = "<group>"; };
+		AA6982101F5CF23000BCF551 /* AIQAlbumController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIQAlbumController.h; sourceTree = "<group>"; };
+		AA6982111F5CF23000BCF551 /* AIQAlbumController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIQAlbumController.m; sourceTree = "<group>"; };
+		AA6982131F5CF40300BCF551 /* AIQTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIQTableViewController.h; sourceTree = "<group>"; };
+		AA6982141F5CF40300BCF551 /* AIQTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIQTableViewController.m; sourceTree = "<group>"; };
+		AA6982161F5CF41B00BCF551 /* AIQCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIQCollectionViewController.h; sourceTree = "<group>"; };
+		AA6982171F5CF41B00BCF551 /* AIQCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIQCollectionViewController.m; sourceTree = "<group>"; };
+		AA69821A1F5CF48D00BCF551 /* AIQTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIQTableView.h; sourceTree = "<group>"; };
+		AA69821B1F5CF48D00BCF551 /* AIQTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIQTableView.m; sourceTree = "<group>"; };
+		AA69821D1F5CF4A300BCF551 /* AIQCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIQCollectionView.h; sourceTree = "<group>"; };
+		AA69821E1F5CF4A300BCF551 /* AIQCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIQCollectionView.m; sourceTree = "<group>"; };
+		AA6982201F5CF56000BCF551 /* AIQTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIQTableViewCell.h; sourceTree = "<group>"; };
+		AA6982211F5CF56000BCF551 /* AIQTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIQTableViewCell.m; sourceTree = "<group>"; };
+		AA6982231F5D05C900BCF551 /* AIQCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIQCollectionViewCell.h; sourceTree = "<group>"; };
+		AA6982241F5D05C900BCF551 /* AIQCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIQCollectionViewCell.m; sourceTree = "<group>"; };
+		AA6982261F5D3BD900BCF551 /* AIQAlbumViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIQAlbumViewModel.h; sourceTree = "<group>"; };
+		AA6982271F5D3BD900BCF551 /* AIQAlbumViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIQAlbumViewModel.m; sourceTree = "<group>"; };
+		AA6982291F5D49E000BCF551 /* AIQPhotoThumbnailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIQPhotoThumbnailCell.h; sourceTree = "<group>"; };
+		AA69822A1F5D49E000BCF551 /* AIQPhotoThumbnailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIQPhotoThumbnailCell.m; sourceTree = "<group>"; };
+		AA69822C1F5D519800BCF551 /* AIQAlbumSelectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIQAlbumSelectView.h; sourceTree = "<group>"; };
+		AA69822D1F5D519800BCF551 /* AIQAlbumSelectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIQAlbumSelectView.m; sourceTree = "<group>"; };
+		AA69822F1F5D548400BCF551 /* AIQAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIQAlbum.h; sourceTree = "<group>"; };
+		AA6982301F5D548400BCF551 /* AIQAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIQAlbum.m; sourceTree = "<group>"; };
 		F2F8859DA1C511A9DA343C24 /* Pods-Anniversary.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Anniversary.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Anniversary/Pods-Anniversary.debug.xcconfig"; sourceTree = "<group>"; };
 		F66CDCFBECC55C317BA7F13D /* Pods-Anniversary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Anniversary.release.xcconfig"; path = "Pods/Target Support Files/Pods-Anniversary/Pods-Anniversary.release.xcconfig"; sourceTree = "<group>"; };
 		FB53C11A9894F739894CD0B3 /* libPods-Anniversary.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Anniversary.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -192,6 +225,7 @@
 		AA69818E1F580DAC00BCF551 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				AA6982191F5CF46500BCF551 /* View */,
 				AA6981E11F594BC600BCF551 /* Model */,
 				AA6981D41F5922FF00BCF551 /* Utility */,
 				AA6981A51F58158500BCF551 /* Categories */,
@@ -208,6 +242,10 @@
 				AA6981911F580E1A00BCF551 /* AIQBasicViewController.m */,
 				AA6981931F580E5300BCF551 /* AIQBasicNavigationController.h */,
 				AA6981941F580E5300BCF551 /* AIQBasicNavigationController.m */,
+				AA6982131F5CF40300BCF551 /* AIQTableViewController.h */,
+				AA6982141F5CF40300BCF551 /* AIQTableViewController.m */,
+				AA6982161F5CF41B00BCF551 /* AIQCollectionViewController.h */,
+				AA6982171F5CF41B00BCF551 /* AIQCollectionViewController.m */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -282,6 +320,7 @@
 		AA6981BE1F581CA200BCF551 /* Feature */ = {
 			isa = PBXGroup;
 			children = (
+				AA69820A1F5CF18200BCF551 /* Album */,
 				AA69818D1F580D7900BCF551 /* Main */,
 			);
 			path = Feature;
@@ -312,6 +351,8 @@
 			children = (
 				AA6981E21F594F1E00BCF551 /* AIQPhoto.h */,
 				AA6981E31F594F1E00BCF551 /* AIQPhoto.m */,
+				AA69822F1F5D548400BCF551 /* AIQAlbum.h */,
+				AA6982301F5D548400BCF551 /* AIQAlbum.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -350,6 +391,68 @@
 				AA6981FD1F595CD800BCF551 /* UIImage+MWPhotoBrowser.m */,
 			);
 			path = MWPhotoBrowser;
+			sourceTree = "<group>";
+		};
+		AA69820A1F5CF18200BCF551 /* Album */ = {
+			isa = PBXGroup;
+			children = (
+				AA69820F1F5CF1DF00BCF551 /* Model */,
+				AA69820E1F5CF1D500BCF551 /* ViewModel */,
+				AA69820D1F5CF1CC00BCF551 /* View */,
+				AA69820B1F5CF1B900BCF551 /* ViewController */,
+			);
+			path = Album;
+			sourceTree = "<group>";
+		};
+		AA69820B1F5CF1B900BCF551 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AA6982101F5CF23000BCF551 /* AIQAlbumController.h */,
+				AA6982111F5CF23000BCF551 /* AIQAlbumController.m */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		AA69820D1F5CF1CC00BCF551 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				AA6982291F5D49E000BCF551 /* AIQPhotoThumbnailCell.h */,
+				AA69822A1F5D49E000BCF551 /* AIQPhotoThumbnailCell.m */,
+				AA69822C1F5D519800BCF551 /* AIQAlbumSelectView.h */,
+				AA69822D1F5D519800BCF551 /* AIQAlbumSelectView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		AA69820E1F5CF1D500BCF551 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				AA6982261F5D3BD900BCF551 /* AIQAlbumViewModel.h */,
+				AA6982271F5D3BD900BCF551 /* AIQAlbumViewModel.m */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		AA69820F1F5CF1DF00BCF551 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		AA6982191F5CF46500BCF551 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				AA69821A1F5CF48D00BCF551 /* AIQTableView.h */,
+				AA69821B1F5CF48D00BCF551 /* AIQTableView.m */,
+				AA69821D1F5CF4A300BCF551 /* AIQCollectionView.h */,
+				AA69821E1F5CF4A300BCF551 /* AIQCollectionView.m */,
+				AA6982201F5CF56000BCF551 /* AIQTableViewCell.h */,
+				AA6982211F5CF56000BCF551 /* AIQTableViewCell.m */,
+				AA6982231F5D05C900BCF551 /* AIQCollectionViewCell.h */,
+				AA6982241F5D05C900BCF551 /* AIQCollectionViewCell.m */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		BB75B44ECAE15C7269C958AC /* Frameworks */ = {
@@ -494,27 +597,38 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA6981951F580E5300BCF551 /* AIQBasicNavigationController.m in Sources */,
+				AA6982281F5D3BD900BCF551 /* AIQAlbumViewModel.m in Sources */,
 				AA6981FE1F595CD800BCF551 /* MWCaptionView.m in Sources */,
 				AA6981DA1F59359D00BCF551 /* AIQAlbumsService.m in Sources */,
 				AA6981FF1F595CD800BCF551 /* MWGridCell.m in Sources */,
+				AA69821C1F5CF48D00BCF551 /* AIQTableView.m in Sources */,
 				AA6982031F595CD800BCF551 /* MWTapDetectingImageView.m in Sources */,
 				AA6981921F580E1A00BCF551 /* AIQBasicViewController.m in Sources */,
 				AA6981C21F58F79D00BCF551 /* AIQImageLoader.m in Sources */,
 				AA6982021F595CD800BCF551 /* MWPhotoBrowser.m in Sources */,
 				AA6982011F595CD800BCF551 /* MWPhoto.m in Sources */,
+				AA6982121F5CF23000BCF551 /* AIQAlbumController.m in Sources */,
+				AA6982181F5CF41B00BCF551 /* AIQCollectionViewController.m in Sources */,
+				AA69821F1F5CF4A300BCF551 /* AIQCollectionView.m in Sources */,
+				AA6982221F5CF56000BCF551 /* AIQTableViewCell.m in Sources */,
 				AA6982051F595CD800BCF551 /* MWZoomingScrollView.m in Sources */,
 				AA6981D31F5921FB00BCF551 /* UIImage+Extension.m in Sources */,
 				AA6982001F595CD800BCF551 /* MWGridViewController.m in Sources */,
 				AA6981A91F5815CF00BCF551 /* UIColor+Extension.m in Sources */,
 				AA6981E01F5937DA00BCF551 /* AIQConstants.m in Sources */,
 				AA6981BC1F581A9F00BCF551 /* NSString+Extension.m in Sources */,
+				AA6982251F5D05C900BCF551 /* AIQCollectionViewCell.m in Sources */,
 				AA6982061F595CD800BCF551 /* UIImage+MWPhotoBrowser.m in Sources */,
+				AA6982151F5CF40300BCF551 /* AIQTableViewController.m in Sources */,
 				AA6981D71F59234100BCF551 /* CGUtilities.m in Sources */,
+				AA6982311F5D548400BCF551 /* AIQAlbum.m in Sources */,
 				AA6981C51F590E3500BCF551 /* AIQTabBarController.m in Sources */,
 				AA6981E41F594F1E00BCF551 /* AIQPhoto.m in Sources */,
+				AA69822B1F5D49E000BCF551 /* AIQPhotoThumbnailCell.m in Sources */,
 				AA6981C81F59116400BCF551 /* AIQSQLService.m in Sources */,
 				AA6981791F5803E000BCF551 /* AIQAppDelegate.m in Sources */,
 				AA6981BB1F581A9F00BCF551 /* NSNumber+Extension.m in Sources */,
+				AA69822E1F5D519800BCF551 /* AIQAlbumSelectView.m in Sources */,
 				AA6981B61F58188B00BCF551 /* NSData+Extension.m in Sources */,
 				AA6982041F595CD800BCF551 /* MWTapDetectingView.m in Sources */,
 				AA6981761F5803E000BCF551 /* main.m in Sources */,

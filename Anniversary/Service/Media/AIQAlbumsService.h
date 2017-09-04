@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <Photos/PHCollection.h>
 #import <Photos/PHAsset.h>
+#import "AIQAlbum.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 //+ (void)queryCameraAuthorizationStatus:(AIQBoolResultBlock)result;
 
 #pragma mark - PhotoLibrary
-+ (void)fetchAllPhotoAlbums:(void(^)(NSArray<PHAssetCollection *> *systemAlbums, NSArray<PHAssetCollection *> *customAlbums))result;
++ (void)fetchAllPhotoAlbums:(void(^)(NSArray<AIQAlbum *> *systemAlbums, NSArray<AIQAlbum *> *customAlbums))result;
 
 + (void)fetchAllPhotoAssetsInAlbum:(PHAssetCollection *)album completeHandler:(void(^)(NSArray<PHAsset *> *photos))result;
 

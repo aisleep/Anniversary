@@ -8,6 +8,8 @@
 
 #import "AIQAppDelegate.h"
 #import "AIQTabBarController.h"
+#import "AIQBasicNavigationController.h"
+#import "AIQAlbumController.h"
 
 @interface AIQAppDelegate ()
 
@@ -18,10 +20,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    AIQTabBarController *tabBarController = [[AIQTabBarController alloc] init];
+//    AIQTabBarController *tabBarController = [[AIQTabBarController alloc] init];
+    AIQAlbumController *albumController = [[AIQAlbumController alloc] init];
+    AIQBasicNavigationController *nav = [[AIQBasicNavigationController alloc] initWithRootViewController:albumController];
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
-    self.window.rootViewController = tabBarController;
+    self.window.rootViewController = nav;
     [self.window makeKeyAndVisible];
     
     return YES;

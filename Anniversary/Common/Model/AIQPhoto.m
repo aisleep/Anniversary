@@ -129,7 +129,11 @@
     } else if (_asset) {
         
         // Load from photos asset
-        [self _performLoadUnderlyingImageAndNotifyWithAsset: _asset targetSize:_assetTargetSize];
+        if (_isThumbnail) {
+            [self _performLoadThumbnailAndNotifyWithAsset:_asset targetSize:_assetTargetSize];
+        } else {
+            [self _performLoadUnderlyingImageAndNotifyWithAsset:_asset targetSize:_assetTargetSize];
+        }
         
     } else {
         
@@ -193,10 +197,33 @@
     PHImageManager *imageManager = [PHImageManager defaultManager];
     
     PHImageRequestOptions *options = [PHImageRequestOptions new];
-    options.networkAccessAllowed = NO;
+    options.networkAccessAllowed = YES;
     options.resizeMode = PHImageRequestOptionsResizeModeFast;
     options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
-    options.synchronous = YES;
+    options.synchronous = NO;
+    options.progressHandler = ^(double progress, NSError *error, BOOL *stop, NSDictionary *info) {
+        NSDictionary* dict = [NSDictionary dictionaryWithObjectsAndKeys:
+                              [NSNumber numberWithDouble: progress], MWPHOTO_NOTIFICATION_INFOKEY_PROGRESS,
+                              self, MWPHOTO_NOTIFICATION_INFOKEY_PHOTO, nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:MWPHOTO_PROGRESS_NOTIFICATION object:dict];
+    };
+    _assetRequestID = [imageManager requestImageForAsset:asset targetSize:targetSize contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage *result, NSDictionary *info) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.underlyingImage = result;
+            [self imageLoadingComplete];
+        });
+    }];
+}
+
+- (void)_performLoadThumbnailAndNotifyWithAsset:(PHAsset *)asset targetSize:(CGSize)targetSize {
+    
+    PHImageManager *imageManager = [PHImageManager defaultManager];
+    
+    PHImageRequestOptions *options = [PHImageRequestOptions new];
+    options.networkAccessAllowed = NO;
+    options.resizeMode = PHImageRequestOptionsResizeModeFast;
+    options.deliveryMode = PHImageRequestOptionsDeliveryModeFastFormat;
+    options.synchronous = NO;
     options.progressHandler = ^(double progress, NSError *error, BOOL *stop, NSDictionary *info) {
         NSDictionary* dict = [NSDictionary dictionaryWithObjectsAndKeys:
                               [NSNumber numberWithDouble: progress], MWPHOTO_NOTIFICATION_INFOKEY_PROGRESS,
