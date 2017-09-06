@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+ platform :ios, '9.0'
 
 target 'Anniversary' do
   # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
@@ -14,5 +14,6 @@ pod 'MBProgressHUD'
 pod 'CocoaLumberjack'
 pod 'Masonry'
 pod 'DACircularProgress'
+pod 'UITableView+FDTemplateLayoutCell'
 
 end

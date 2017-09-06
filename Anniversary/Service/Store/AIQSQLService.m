@@ -7,6 +7,7 @@
 //
 
 #import "AIQSQLService.h"
+#import <FMDB/FMDB.h>
 
 @implementation AIQSQLService
 
