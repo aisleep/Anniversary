@@ -47,6 +47,10 @@
 		AA69822B1F5D49E000BCF551 /* AIQPhotoThumbnailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AA69822A1F5D49E000BCF551 /* AIQPhotoThumbnailCell.m */; };
 		AA69822E1F5D519800BCF551 /* AIQAlbumSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA69822D1F5D519800BCF551 /* AIQAlbumSelectView.m */; };
 		AA6982311F5D548400BCF551 /* AIQAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6982301F5D548400BCF551 /* AIQAlbum.m */; };
+		AA6982341F60F76F00BCF551 /* UIFont+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6982331F60F76F00BCF551 /* UIFont+Extension.m */; };
+		AA6982371F61275F00BCF551 /* AIQUIFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6982361F61275F00BCF551 /* AIQUIFactory.m */; };
+		AA69823A1F613BA900BCF551 /* AIQNetWorkSatusManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6982391F613BA900BCF551 /* AIQNetWorkSatusManager.m */; };
+		AA69823D1F614D6500BCF551 /* AIQAppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AA69823C1F614D6500BCF551 /* AIQAppManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -132,6 +136,14 @@
 		AA69822D1F5D519800BCF551 /* AIQAlbumSelectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIQAlbumSelectView.m; sourceTree = "<group>"; };
 		AA69822F1F5D548400BCF551 /* AIQAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIQAlbum.h; sourceTree = "<group>"; };
 		AA6982301F5D548400BCF551 /* AIQAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIQAlbum.m; sourceTree = "<group>"; };
+		AA6982321F60F76F00BCF551 /* UIFont+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+Extension.h"; sourceTree = "<group>"; };
+		AA6982331F60F76F00BCF551 /* UIFont+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+Extension.m"; sourceTree = "<group>"; };
+		AA6982351F61275F00BCF551 /* AIQUIFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIQUIFactory.h; sourceTree = "<group>"; };
+		AA6982361F61275F00BCF551 /* AIQUIFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIQUIFactory.m; sourceTree = "<group>"; };
+		AA6982381F613BA900BCF551 /* AIQNetWorkSatusManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIQNetWorkSatusManager.h; sourceTree = "<group>"; };
+		AA6982391F613BA900BCF551 /* AIQNetWorkSatusManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIQNetWorkSatusManager.m; sourceTree = "<group>"; };
+		AA69823B1F614D6500BCF551 /* AIQAppManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIQAppManager.h; sourceTree = "<group>"; };
+		AA69823C1F614D6500BCF551 /* AIQAppManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIQAppManager.m; sourceTree = "<group>"; };
 		F2F8859DA1C511A9DA343C24 /* Pods-Anniversary.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Anniversary.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Anniversary/Pods-Anniversary.debug.xcconfig"; sourceTree = "<group>"; };
 		F66CDCFBECC55C317BA7F13D /* Pods-Anniversary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Anniversary.release.xcconfig"; path = "Pods/Target Support Files/Pods-Anniversary/Pods-Anniversary.release.xcconfig"; sourceTree = "<group>"; };
 		FB53C11A9894F739894CD0B3 /* libPods-Anniversary.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Anniversary.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -198,6 +210,8 @@
 		AA69818B1F580BC100BCF551 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				AA6982381F613BA900BCF551 /* AIQNetWorkSatusManager.h */,
+				AA6982391F613BA900BCF551 /* AIQNetWorkSatusManager.m */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -290,6 +304,8 @@
 				AA6981D21F5921FB00BCF551 /* UIImage+Extension.m */,
 				AA6981A71F5815CF00BCF551 /* UIColor+Extension.h */,
 				AA6981A81F5815CF00BCF551 /* UIColor+Extension.m */,
+				AA6982321F60F76F00BCF551 /* UIFont+Extension.h */,
+				AA6982331F60F76F00BCF551 /* UIFont+Extension.m */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -313,6 +329,8 @@
 				AA6981BF1F58F75200BCF551 /* Media */,
 				AA69819E1F58104100BCF551 /* Store */,
 				AA69818B1F580BC100BCF551 /* Network */,
+				AA69823B1F614D6500BCF551 /* AIQAppManager.h */,
+				AA69823C1F614D6500BCF551 /* AIQAppManager.m */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -342,6 +360,8 @@
 			children = (
 				AA6981D51F59234100BCF551 /* CGUtilities.h */,
 				AA6981D61F59234100BCF551 /* CGUtilities.m */,
+				AA6982351F61275F00BCF551 /* AIQUIFactory.h */,
+				AA6982361F61275F00BCF551 /* AIQUIFactory.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -603,16 +623,19 @@
 				AA6982281F5D3BD900BCF551 /* AIQAlbumViewModel.m in Sources */,
 				AA6981FE1F595CD800BCF551 /* MWCaptionView.m in Sources */,
 				AA6981DA1F59359D00BCF551 /* AIQAlbumsService.m in Sources */,
+				AA69823A1F613BA900BCF551 /* AIQNetWorkSatusManager.m in Sources */,
 				AA6981FF1F595CD800BCF551 /* MWGridCell.m in Sources */,
 				AA69821C1F5CF48D00BCF551 /* AIQTableView.m in Sources */,
 				AA6982031F595CD800BCF551 /* MWTapDetectingImageView.m in Sources */,
 				AA6981921F580E1A00BCF551 /* AIQBasicViewController.m in Sources */,
+				AA69823D1F614D6500BCF551 /* AIQAppManager.m in Sources */,
 				AA6981C21F58F79D00BCF551 /* AIQImageLoader.m in Sources */,
 				AA6982021F595CD800BCF551 /* MWPhotoBrowser.m in Sources */,
 				AA6982011F595CD800BCF551 /* MWPhoto.m in Sources */,
 				AA6982121F5CF23000BCF551 /* AIQAlbumController.m in Sources */,
 				AA6982181F5CF41B00BCF551 /* AIQCollectionViewController.m in Sources */,
 				AA69821F1F5CF4A300BCF551 /* AIQCollectionView.m in Sources */,
+				AA6982371F61275F00BCF551 /* AIQUIFactory.m in Sources */,
 				AA6982221F5CF56000BCF551 /* AIQTableViewCell.m in Sources */,
 				AA6982051F595CD800BCF551 /* MWZoomingScrollView.m in Sources */,
 				AA6981D31F5921FB00BCF551 /* UIImage+Extension.m in Sources */,
@@ -624,6 +647,7 @@
 				AA6982061F595CD800BCF551 /* UIImage+MWPhotoBrowser.m in Sources */,
 				AA6982151F5CF40300BCF551 /* AIQTableViewController.m in Sources */,
 				AA6981D71F59234100BCF551 /* CGUtilities.m in Sources */,
+				AA6982341F60F76F00BCF551 /* UIFont+Extension.m in Sources */,
 				AA6982311F5D548400BCF551 /* AIQAlbum.m in Sources */,
 				AA6981C51F590E3500BCF551 /* AIQTabBarController.m in Sources */,
 				AA6981E41F594F1E00BCF551 /* AIQPhoto.m in Sources */,
@@ -788,7 +812,7 @@
 					"\"UIKit\"",
 					"-lz",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = personal.aisleep.Anniversary;
+				PRODUCT_BUNDLE_IDENTIFIER = personal.aisleep.AIQAnniversary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -831,7 +855,7 @@
 					"\"UIKit\"",
 					"-lz",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = personal.aisleep.Anniversary;
+				PRODUCT_BUNDLE_IDENTIFIER = personal.aisleep.AIQAnniversary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

@@ -47,16 +47,26 @@
 
 - (void)fetchPhotosAtAlbum:(AIQAlbum *)album completeHandler:(void (^)())completeHandler {
     [AIQAlbumsService fetchAllPhotoAssetsInAlbum:album.assetCollection completeHandler:^(NSArray<PHAsset *> * _Nonnull photos) {
-        NSMutableArray *photoModels = [NSMutableArray arrayWithCapacity:photos.count];
+        NSMutableArray *thumbnailPhotoModels = [NSMutableArray arrayWithCapacity:photos.count];
+        NSMutableArray *originalPhotoModels = [NSMutableArray arrayWithCapacity:photos.count];
         [photos enumerateObjectsUsingBlock:^(PHAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            AIQPhoto *photo = [AIQPhoto photoWithAsset:obj targetSize:_thumbnailsSize];
-            photo.isThumbnail = YES;
-            [photoModels addObject:photo];
+            AIQPhoto *thumbnailphoto = [AIQPhoto photoWithAsset:obj targetSize:_thumbnailsSize];
+            thumbnailphoto.isThumbnail = YES;
+            [thumbnailPhotoModels addObject:thumbnailphoto];
+            AIQPhoto *originalphoto = [AIQPhoto photoWithAsset:obj targetSize:PHImageManagerMaximumSize];
+            [originalPhotoModels addObject:originalphoto];
         }];
-        _thumbnailsForSelectedAlbum = photoModels.copy;
+        _thumbnailsForSelectedAlbum = thumbnailPhotoModels.copy;
+        _originalImageForSelectedAlbum = originalPhotoModels.copy;
         if (completeHandler) {
             completeHandler();
         }
+    }];
+}
+
+- (void)unloadThumbnails {
+    [_thumbnailsForSelectedAlbum enumerateObjectsUsingBlock:^(AIQPhoto * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [obj unloadUnderlyingImage];
     }];
 }
 

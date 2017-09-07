@@ -21,8 +21,8 @@
 
 - (void)setDataSource:(id<AIQCollectionViewDataSource>)dataSource {
     [super setDataSource:dataSource];
-    if ([dataSource respondsToSelector:@selector(classesForTableViewRegisterCell)]) {
-        for (Class clazz in [dataSource classesForTableViewRegisterCell]) {
+    if ([dataSource respondsToSelector:@selector(classesForCollectionViewRegisterCell)]) {
+        for (Class clazz in [dataSource classesForCollectionViewRegisterCell]) {
             if ([clazz respondsToSelector:@selector(reuseIdentifier)]) {
                 [self registerClass:clazz
          forCellWithReuseIdentifier:[clazz performSelector:@selector(reuseIdentifier)]];

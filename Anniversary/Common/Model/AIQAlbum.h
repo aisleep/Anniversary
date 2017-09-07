@@ -8,12 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@class PHAssetCollection;
+@class PHAssetCollection, PHAsset;
 @interface AIQAlbum : NSObject
 
 @property (nonatomic, copy) NSString *localIdentifier;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, assign) NSUInteger photoCount;
 @property (nonatomic, strong) PHAssetCollection *assetCollection;
+@property (nonatomic, strong) PHAsset *coverAsset;
 
 @end

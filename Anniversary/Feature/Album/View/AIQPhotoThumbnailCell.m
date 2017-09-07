@@ -14,15 +14,21 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
+        self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+        self.imageView.clipsToBounds = YES;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(completeLoadImageNotification:) name:MWPHOTO_IMMEDIATELYREFRESHING_NOTIFICATION object:nil];;
     }
     return self;
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 #pragma mark - Notification
 - (void)completeLoadImageNotification:(NSNotification *)notify {
     AIQPhoto *photo = notify.object;
-    if (photo && [photo.localIdentifier isEqualToString:_photo.localIdentifier]) {
+    if (photo && photo == _photo) {
         self.imageView.image = photo.underlyingImage;
     }
 }

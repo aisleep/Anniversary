@@ -21,4 +21,6 @@
 
 - (void)hideAnimated:(BOOL)animated;
 
+- (void)unloadAlbumCovers;
+
 @end

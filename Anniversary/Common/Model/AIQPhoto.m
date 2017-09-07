@@ -96,6 +96,7 @@
     @catch (NSException *exception) {
         self.underlyingImage = nil;
         _loadingInProgress = NO;
+        _isInCloud = NO;
         [self imageLoadingComplete];
     }
     @finally {
@@ -193,7 +194,6 @@
 
 // Load from photos library
 - (void)_performLoadUnderlyingImageAndNotifyWithAsset:(PHAsset *)asset targetSize:(CGSize)targetSize {
-    
     PHImageManager *imageManager = [PHImageManager defaultManager];
     
     PHImageRequestOptions *options = [PHImageRequestOptions new];
@@ -208,6 +208,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:MWPHOTO_PROGRESS_NOTIFICATION object:dict];
     };
     _assetRequestID = [imageManager requestImageForAsset:asset targetSize:targetSize contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage *result, NSDictionary *info) {
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             self.underlyingImage = result;
             [self imageLoadingComplete];
@@ -216,7 +217,6 @@
 }
 
 - (void)_performLoadThumbnailAndNotifyWithAsset:(PHAsset *)asset targetSize:(CGSize)targetSize {
-    
     PHImageManager *imageManager = [PHImageManager defaultManager];
     
     PHImageRequestOptions *options = [PHImageRequestOptions new];
@@ -232,6 +232,7 @@
     };
     _assetRequestID = [imageManager requestImageForAsset:asset targetSize:targetSize contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage *result, NSDictionary *info) {
         dispatch_async(dispatch_get_main_queue(), ^{
+            _isInCloud = [info[PHImageResultIsInCloudKey] boolValue];
             self.underlyingImage = result;
             [self imageLoadingComplete];
         });
@@ -263,13 +264,15 @@
 // Release if we can get it again from path or url
 - (void)unloadUnderlyingImage {
     _loadingInProgress = NO;
+    _isInCloud = NO;
     self.underlyingImage = nil;
 }
 
 - (void)cancelAnyLoading {
+    _loadingInProgress = NO;
+    _isInCloud = NO;
     if (_webImageOperation != nil) {
         [_webImageOperation cancel];
-        _loadingInProgress = NO;
     }
     [self cancelImageRequest];
     [self cancelVideoRequest];

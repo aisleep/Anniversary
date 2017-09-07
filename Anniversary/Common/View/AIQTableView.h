@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @required
 - (NSArray<Class> *)classesForTableViewRegisterCell;
+- (NSArray<Class> *)classesForTableViewRegisterHeaderFooterView;
 
 @end
 

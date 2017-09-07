@@ -7,14 +7,17 @@
 //
 
 #import "AIQAlbumController.h"
+#import "MWPhotoBrowser.h"
 
 #import "AIQAlbumViewModel.h"
 
 #import "AIQPhotoThumbnailCell.h"
 #import "AIQAlbumSelectView.h"
 
+static const CGFloat CellSpacing = 5.f;
+static const CGFloat numberOfline = 4.f;
 
-@interface AIQAlbumController ()
+@interface AIQAlbumController () <MWPhotoBrowserDelegate>
 
 @property (nonatomic, strong) AIQAlbumViewModel *albumViewModel;
 
@@ -26,11 +29,11 @@
 
 - (instancetype)init {
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    CGFloat itemSize = (kScreenWidth - kCellPadding * 3) / 4;
+    CGFloat itemSize = (kScreenWidth - CellSpacing * (numberOfline + 1)) / numberOfline;
     flowLayout.itemSize = CGSizeMake(itemSize, itemSize);
-    flowLayout.sectionInset = UIEdgeInsetsMake(kCellPadding, 0, 0, 0);
-    flowLayout.minimumLineSpacing = kCellPadding;
-    flowLayout.minimumInteritemSpacing = kCellPadding;
+    flowLayout.sectionInset = UIEdgeInsetsMake(CellSpacing, CellSpacing, CellSpacing, CellSpacing);
+    flowLayout.minimumLineSpacing = CellSpacing;
+    flowLayout.minimumInteritemSpacing = CellSpacing;
     self = [self initWithCollectionViewLayout:flowLayout];
     if (self) {
         _albumViewModel = [[AIQAlbumViewModel alloc] initWithThumbnailSize:CGSizeMake(itemSize * kScreenScale, itemSize * kScreenScale)];
@@ -91,7 +94,7 @@
 }
 
 #pragma mark - CollectionView DataSource && Delegate
-- (NSArray<Class> *)classesForTableViewRegisterCell {
+- (NSArray<Class> *)classesForCollectionViewRegisterCell {
     return @[[AIQPhotoThumbnailCell class]];
 }
 
@@ -108,9 +111,33 @@
     return cell;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
+    [browser setCurrentPhotoIndex:indexPath.item];
+    [self presentViewController:browser animated:YES completion:nil];
+}
+
+#pragma mark - MWPhotoBrowserDelegate
+- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
+    return _albumViewModel.originalImageForSelectedAlbum.count;
+}
+
+- (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
+    AIQPhoto *photo = [_albumViewModel.originalImageForSelectedAlbum objectAtIndex:index];
+    return photo;
+}
+
+- (id<MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser thumbPhotoAtIndex:(NSUInteger)index {
+    AIQPhoto *photo = [_albumViewModel.thumbnailsForSelectedAlbum objectAtIndex:index];
+    return photo;
+}
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+    [_albumViewModel unloadThumbnails];
+    [_albumSelectView unloadAlbumCovers];
 }
 
 @end

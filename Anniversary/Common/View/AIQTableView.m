@@ -21,6 +21,15 @@
             }
         }
     }
+    
+    if ([dataSource respondsToSelector:@selector(classesForTableViewRegisterHeaderFooterView)]) {
+        for (Class clazz in [dataSource classesForTableViewRegisterHeaderFooterView]) {
+            if ([clazz respondsToSelector:@selector(reuseIdentifier)]) {
+                [self registerClass:clazz
+ forHeaderFooterViewReuseIdentifier:[clazz performSelector:@selector(reuseIdentifier)]];
+            }
+        }
+    }
 }
 
 @end

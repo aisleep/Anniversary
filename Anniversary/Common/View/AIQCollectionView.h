@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol AIQCollectionViewDataSource <UICollectionViewDataSource>
 
 @required
-- (NSArray<Class> *)classesForTableViewRegisterCell;
+- (NSArray<Class> *)classesForCollectionViewRegisterCell;
 
 @end
 

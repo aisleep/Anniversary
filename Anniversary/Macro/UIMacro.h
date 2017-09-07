@@ -82,13 +82,13 @@
  *  Main Font in Mico
  *
  */
-#define MCMainTitleFont     [UIFont mcSemiBoldFontWithSize:17]
+#define MCMainTitleFont     [UIFont aiqSemiboldFontOfSize:17]
 
 /**
  *  Rectangle PopView or Button CornerRadius
  */
-#define kDefaultCornerRadius    2
-#define kSmallCornerRadius      4
+#define kSmallCornerRadius      2
+#define kDefaultCornerRadius    4
 #define kLargeCornerRadius      10
 
 /**

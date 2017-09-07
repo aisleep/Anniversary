@@ -8,11 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "AIQAlbum.h"
+#import "AIQPhoto.h"
 
-@class AIQPhoto;
 @interface AIQAlbumViewModel : NSObject
 
 @property (nonatomic, strong, readonly) NSArray<AIQPhoto *> *thumbnailsForSelectedAlbum;
+@property (nonatomic, strong, readonly) NSArray<AIQPhoto *> *originalImageForSelectedAlbum;
 
 @property (nonatomic, strong) AIQAlbum *selectedAlbum;
 
@@ -24,5 +25,7 @@
 - (void)initializeAlbum:(void(^)(BOOL success))completeHandler;
 
 - (void)fetchPhotosAtAlbum:(AIQAlbum *)album completeHandler:(void(^)())completeHandler;
+
+- (void)unloadThumbnails;
 
 @end

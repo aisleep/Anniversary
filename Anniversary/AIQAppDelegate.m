@@ -11,6 +11,8 @@
 #import "AIQBasicNavigationController.h"
 #import "AIQAlbumController.h"
 
+#import "AIQAppManager.h"
+
 @interface AIQAppDelegate ()
 
 @end
@@ -19,6 +21,9 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    [AIQAppManager setup];
+    
     // Override point for customization after application launch.
 //    AIQTabBarController *tabBarController = [[AIQTabBarController alloc] init];
     AIQAlbumController *albumController = [[AIQAlbumController alloc] init];

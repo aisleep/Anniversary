@@ -84,6 +84,7 @@
     album.title = assetCollection.localizedTitle;
     album.photoCount = fetchResult.count;
     album.assetCollection = assetCollection;
+    album.coverAsset = fetchResult.lastObject;
     return album;
 }
 
