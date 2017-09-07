@@ -7,7 +7,7 @@
 //
 
 #import "AIQAlbumController.h"
-#import "MWPhotoBrowser.h"
+#import "AIQAlbumBrowser.h"
 
 #import "AIQAlbumViewModel.h"
 
@@ -17,11 +17,13 @@
 static const CGFloat CellSpacing = 5.f;
 static const CGFloat numberOfline = 4.f;
 
-@interface AIQAlbumController () <MWPhotoBrowserDelegate>
+@interface AIQAlbumController () <AIQAlbumBrowserDelegate>
 
 @property (nonatomic, strong) AIQAlbumViewModel *albumViewModel;
 
 @property (nonatomic, strong) AIQAlbumSelectView *albumSelectView;
+
+@property (nonatomic, strong) AIQAlbumBrowser *browser;
 
 @end
 
@@ -93,13 +95,90 @@ static const CGFloat numberOfline = 4.f;
     [self.albumSelectView showInViewController:self animated:YES];
 }
 
+- (void)showAlbumBrowserInCurrentPhotoIndex:(NSUInteger)index {
+    if (_browser) {
+        return;
+    }
+    CGRect screenFrame = self.view.bounds;
+    _browser = [[AIQAlbumBrowser alloc] init];
+    _browser.dataSource = _albumViewModel;
+    _browser.delegate = self;
+    [_browser setCurrentPhotoIndex:index];
+    _browser.view.frame = CGRectOffset(_browser.view.frame, 0, -1 * screenFrame.size.height);
+    
+    // Add as a child view controller
+    [self addChildViewController:_browser];
+    [self.view addSubview:_browser.view];
+    
+    // Perform any adjustments
+    [_browser.view layoutIfNeeded];
+    
+    // Hide action button on nav bar if it exists
+//    if (self.navigationItem.rightBarButtonItem == _actionButton) {
+//        _gridPreviousRightNavItem = _actionButton;
+//        [self.navigationItem setRightBarButtonItem:nil animated:YES];
+//    } else {
+//        _gridPreviousRightNavItem = nil;
+//    }
+    
+    // Update
+//    [self updateNavigation];
+//    [self setControlsHidden:NO animated:YES permanent:YES];
+    
+    // Animate grid in and photo scroller out
+    
+    [_browser willMoveToParentViewController:self];
+    [UIView animateWithDuration:0.3 animations:^(void) {
+        _browser.view.frame = screenFrame;
+        self.collectionView.frame = CGRectOffset(screenFrame, 0, 1 * screenFrame.size.height);
+    } completion:^(BOOL finished) {
+        [_browser didMoveToParentViewController:self];
+    }];
+}
+
+- (void)hideAlbumBrowser {
+    if (!_browser) {
+        return;
+    }
+    
+    // Remember previous content offset
+    NSUInteger currentIndex = _browser.currentIndex;
+    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:currentIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+    
+    // Restore action button if it was removed
+//    if (_gridPreviousRightNavItem == _actionButton && _actionButton) {
+//        [self.navigationItem setRightBarButtonItem:_gridPreviousRightNavItem animated:YES];
+//    }
+    
+    // Position prior to hide animation
+    CGRect screenFrame = self.view.bounds;
+    self.collectionView.frame = CGRectOffset(screenFrame, 0, 1 * screenFrame.size.height);
+    
+    // Remember and remove controller now so things can detect a nil grid controller
+    AIQAlbumBrowser *tmpBrowser = _browser;
+    _browser = nil;
+    
+    // Update
+//    [self updateNavigation];
+    
+    // Animate, hide grid and show paging scroll view
+    [UIView animateWithDuration:0.3 animations:^{
+        tmpBrowser.view.frame = CGRectOffset(screenFrame, 0, -1 * screenFrame.size.height);
+        self.collectionView.frame = screenFrame;
+    } completion:^(BOOL finished) {
+        [tmpBrowser willMoveToParentViewController:nil];
+        [tmpBrowser.view removeFromSuperview];
+        [tmpBrowser removeFromParentViewController];
+    }];
+}
+
 #pragma mark - CollectionView DataSource && Delegate
 - (NSArray<Class> *)classesForCollectionViewRegisterCell {
     return @[[AIQPhotoThumbnailCell class]];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return _albumViewModel.thumbnailsForSelectedAlbum.count;
+    return _albumViewModel.numberOfPhoto;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -112,26 +191,14 @@ static const CGFloat numberOfline = 4.f;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
-    [browser setCurrentPhotoIndex:indexPath.item];
-    [self presentViewController:browser animated:YES completion:nil];
+    [self showAlbumBrowserInCurrentPhotoIndex:indexPath.item];
 }
 
-#pragma mark - MWPhotoBrowserDelegate
-- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
-    return _albumViewModel.originalImageForSelectedAlbum.count;
-}
+#pragma mark - AIQAlbumBrowserDelegate
 
-- (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
-    AIQPhoto *photo = [_albumViewModel.originalImageForSelectedAlbum objectAtIndex:index];
-    return photo;
+- (void)photoBrowserDidFinishModalPresentation:(AIQAlbumBrowser *)photoBrowser {
+    [self hideAlbumBrowser];
 }
-
-- (id<MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser thumbPhotoAtIndex:(NSUInteger)index {
-    AIQPhoto *photo = [_albumViewModel.thumbnailsForSelectedAlbum objectAtIndex:index];
-    return photo;
-}
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

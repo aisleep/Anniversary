@@ -7,13 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AIQAlbumBrowserProtocol.h"
 #import "AIQAlbum.h"
 #import "AIQPhoto.h"
 
-@interface AIQAlbumViewModel : NSObject
+@interface AIQAlbumViewModel : NSObject <AIQAlbumBrowserDataSource>
 
 @property (nonatomic, strong, readonly) NSArray<AIQPhoto *> *thumbnailsForSelectedAlbum;
 @property (nonatomic, strong, readonly) NSArray<AIQPhoto *> *originalImageForSelectedAlbum;
+@property (nonatomic, assign, readonly) NSUInteger numberOfPhoto;
 
 @property (nonatomic, strong) AIQAlbum *selectedAlbum;
 

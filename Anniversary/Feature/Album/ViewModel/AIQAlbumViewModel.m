@@ -56,6 +56,7 @@
             AIQPhoto *originalphoto = [AIQPhoto photoWithAsset:obj targetSize:PHImageManagerMaximumSize];
             [originalPhotoModels addObject:originalphoto];
         }];
+        _numberOfPhoto = photos.count;
         _thumbnailsForSelectedAlbum = thumbnailPhotoModels.copy;
         _originalImageForSelectedAlbum = originalPhotoModels.copy;
         if (completeHandler) {
@@ -68,6 +69,25 @@
     [_thumbnailsForSelectedAlbum enumerateObjectsUsingBlock:^(AIQPhoto * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [obj unloadUnderlyingImage];
     }];
+}
+
+#pragma mark - AIQAlbumBrowserDataSource
+- (NSUInteger)numberOfPhotosInPhotoBrowser:(AIQAlbumBrowser *)photoBrowser {
+    return _numberOfPhoto;
+}
+
+- (id<MWPhoto>)photoBrowser:(AIQAlbumBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
+    if (index < _originalImageForSelectedAlbum.count) {
+        return [_originalImageForSelectedAlbum objectAtIndex:index];
+    }
+    return nil;
+}
+
+- (id<MWPhoto>)photoBrowser:(AIQAlbumBrowser *)photoBrowser thumbPhotoAtIndex:(NSUInteger)index {
+    if (index < _thumbnailsForSelectedAlbum.count) {
+        return [_thumbnailsForSelectedAlbum objectAtIndex:index];
+    }
+    return nil;
 }
 
 @end

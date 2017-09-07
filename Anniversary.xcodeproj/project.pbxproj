@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0B0D76E77957B0B657F2D82F /* libPods-Anniversary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FB53C11A9894F739894CD0B3 /* libPods-Anniversary.a */; };
+		47009A471F618CA4007206C3 /* AIQAlbumBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 47009A461F618CA4007206C3 /* AIQAlbumBrowser.m */; };
 		AA6981761F5803E000BCF551 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6981751F5803E000BCF551 /* main.m */; };
 		AA6981791F5803E000BCF551 /* AIQAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6981781F5803E000BCF551 /* AIQAppDelegate.m */; };
 		AA69817F1F5803E000BCF551 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA69817D1F5803E000BCF551 /* Main.storyboard */; };
@@ -54,6 +55,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		47009A451F618CA4007206C3 /* AIQAlbumBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIQAlbumBrowser.h; sourceTree = "<group>"; };
+		47009A461F618CA4007206C3 /* AIQAlbumBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIQAlbumBrowser.m; sourceTree = "<group>"; };
+		47009A481F619537007206C3 /* AIQAlbumBrowserProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIQAlbumBrowserProtocol.h; sourceTree = "<group>"; };
 		AA6981711F5803E000BCF551 /* Anniversary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Anniversary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA6981751F5803E000BCF551 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AA6981771F5803E000BCF551 /* AIQAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AIQAppDelegate.h; sourceTree = "<group>"; };
@@ -429,6 +433,9 @@
 			children = (
 				AA6982101F5CF23000BCF551 /* AIQAlbumController.h */,
 				AA6982111F5CF23000BCF551 /* AIQAlbumController.m */,
+				47009A451F618CA4007206C3 /* AIQAlbumBrowser.h */,
+				47009A461F618CA4007206C3 /* AIQAlbumBrowser.m */,
+				47009A481F619537007206C3 /* AIQAlbumBrowserProtocol.h */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -645,6 +652,7 @@
 				AA6981BC1F581A9F00BCF551 /* NSString+Extension.m in Sources */,
 				AA6982251F5D05C900BCF551 /* AIQCollectionViewCell.m in Sources */,
 				AA6982061F595CD800BCF551 /* UIImage+MWPhotoBrowser.m in Sources */,
+				47009A471F618CA4007206C3 /* AIQAlbumBrowser.m in Sources */,
 				AA6982151F5CF40300BCF551 /* AIQTableViewController.m in Sources */,
 				AA6981D71F59234100BCF551 /* CGUtilities.m in Sources */,
 				AA6982341F60F76F00BCF551 /* UIFont+Extension.m in Sources */,
