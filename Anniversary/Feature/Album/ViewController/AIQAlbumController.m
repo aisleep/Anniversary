@@ -19,11 +19,13 @@ static const CGFloat numberOfline = 4.f;
 
 @interface AIQAlbumController () <AIQAlbumBrowserDelegate>
 
+@property (nonatomic, strong) AIQAlbumBrowser *browser;
+
 @property (nonatomic, strong) AIQAlbumViewModel *albumViewModel;
 
 @property (nonatomic, strong) AIQAlbumSelectView *albumSelectView;
+@property (nonatomic, strong) UIButton *titleView;
 
-@property (nonatomic, strong) AIQAlbumBrowser *browser;
 
 @end
 
@@ -57,11 +59,19 @@ static const CGFloat numberOfline = 4.f;
     }];
 }
 
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+    [_albumViewModel unloadPhotoImages];
+    [_albumSelectView unloadAlbumCovers];
+}
+
 - (void)initializeTitleView {
-    UIButton *titleView = [UIButton buttonWithType:UIButtonTypeCustom];
-    [titleView setTitleColor:MCMainTitleColor forState:UIControlStateNormal];
-    [titleView addTarget:self action:@selector(showAlbumSelectView) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.titleView = titleView;
+    _titleView = [UIButton buttonWithType:UIButtonTypeCustom];
+    _titleView.titleLabel.font = MCMainTitleFont;
+    [_titleView setTitleColor:MCMainTitleColor forState:UIControlStateNormal];
+    [_titleView addTarget:self action:@selector(showAlbumSelectView) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.titleView = _titleView;
     [self updateTitleView];
 }
 
@@ -92,7 +102,11 @@ static const CGFloat numberOfline = 4.f;
 
 #pragma mark - UIAction 
 - (void)showAlbumSelectView {
-    [self.albumSelectView showInViewController:self animated:YES];
+    if (self.albumSelectView.superview) {
+        [self.albumSelectView hideAnimated:YES];
+    } else {
+        [self.albumSelectView showInViewController:self animated:YES];
+    }
 }
 
 - (void)showAlbumBrowserInCurrentPhotoIndex:(NSUInteger)index {
@@ -120,10 +134,8 @@ static const CGFloat numberOfline = 4.f;
 //    } else {
 //        _gridPreviousRightNavItem = nil;
 //    }
-    
-    // Update
-//    [self updateNavigation];
-//    [self setControlsHidden:NO animated:YES permanent:YES];
+    self.navigationItem.titleView = nil;
+
     
     // Animate grid in and photo scroller out
     
@@ -159,12 +171,14 @@ static const CGFloat numberOfline = 4.f;
     _browser = nil;
     
     // Update
-//    [self updateNavigation];
+    [self updateTitleView];
     
     // Animate, hide grid and show paging scroll view
     [UIView animateWithDuration:0.3 animations:^{
         tmpBrowser.view.frame = CGRectOffset(screenFrame, 0, -1 * screenFrame.size.height);
         self.collectionView.frame = screenFrame;
+        self.navigationItem.title = nil;
+        self.navigationItem.titleView = self.titleView;
     } completion:^(BOOL finished) {
         [tmpBrowser willMoveToParentViewController:nil];
         [tmpBrowser.view removeFromSuperview];
@@ -195,16 +209,24 @@ static const CGFloat numberOfline = 4.f;
 }
 
 #pragma mark - AIQAlbumBrowserDelegate
+- (void)photoBrowser:(AIQAlbumBrowser *)photoBrowser updateNavigationTitleAtIndex:(NSUInteger)index {
+    self.navigationItem.title = [NSString stringWithFormat:@"%ld / %ld", index + 1, _albumViewModel.numberOfPhoto];
+}
 
 - (void)photoBrowserDidFinishModalPresentation:(AIQAlbumBrowser *)photoBrowser {
     [self hideAlbumBrowser];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-    [_albumViewModel unloadThumbnails];
-    [_albumSelectView unloadAlbumCovers];
+#pragma mark - Status Bar
+- (BOOL)prefersStatusBarHidden {
+    if (_browser) {
+        return [_browser prefersStatusBarHidden];
+    }
+    return NO;
+}
+
+- (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
+    return UIStatusBarAnimationSlide;
 }
 
 @end

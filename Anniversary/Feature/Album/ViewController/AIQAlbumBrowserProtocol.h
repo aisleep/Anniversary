@@ -25,7 +25,7 @@
 
 @optional
 - (MWCaptionView *)photoBrowser:(AIQAlbumBrowser *)photoBrowser captionViewForPhotoAtIndex:(NSUInteger)index;
-- (NSString *)photoBrowser:(AIQAlbumBrowser *)photoBrowser titleForPhotoAtIndex:(NSUInteger)index;
+- (void)photoBrowser:(AIQAlbumBrowser *)photoBrowser updateNavigationTitleAtIndex:(NSUInteger)index;
 - (void)photoBrowser:(AIQAlbumBrowser *)photoBrowser didDisplayPhotoAtIndex:(NSUInteger)index;
 - (void)photoBrowser:(AIQAlbumBrowser *)photoBrowser actionButtonPressedForPhotoAtIndex:(NSUInteger)index;
 - (BOOL)photoBrowser:(AIQAlbumBrowser *)photoBrowser isPhotoSelectedAtIndex:(NSUInteger)index;

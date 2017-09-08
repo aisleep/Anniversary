@@ -65,8 +65,11 @@
     }];
 }
 
-- (void)unloadThumbnails {
+- (void)unloadPhotoImages {
     [_thumbnailsForSelectedAlbum enumerateObjectsUsingBlock:^(AIQPhoto * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [obj unloadUnderlyingImage];
+    }];
+    [_originalImageForSelectedAlbum enumerateObjectsUsingBlock:^(AIQPhoto * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [obj unloadUnderlyingImage];
     }];
 }

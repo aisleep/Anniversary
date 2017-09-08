@@ -9,6 +9,12 @@
 #import "AIQPhotoThumbnailCell.h"
 #import "AIQPhoto.h"
 
+@interface AIQPhotoThumbnailCell ()
+
+@property (nonatomic, strong) UIImageView *playIcon;
+
+@end
+
 @implementation AIQPhotoThumbnailCell
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -40,12 +46,27 @@
     } else {
         [_photo loadUnderlyingImageAndNotify];
     }
+    if (_photo.isVideo) {
+        self.playIcon.hidden = NO;
+    }
+}
+
+- (UIImageView *)playIcon {
+    if (!_playIcon) {
+        _playIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"btn_videoplay_m"]];
+        [self.contentView addSubview:_playIcon];
+        [_playIcon mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.center.equalTo(self.contentView);
+        }];
+    }
+    return _playIcon;
 }
 
 - (void)prepareForReuse {
     [super prepareForReuse];
     _photo = nil;
     self.imageView.image = nil;
+    _playIcon.hidden = YES;
 }
 
 @end

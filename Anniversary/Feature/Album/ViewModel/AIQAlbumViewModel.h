@@ -28,6 +28,6 @@
 
 - (void)fetchPhotosAtAlbum:(AIQAlbum *)album completeHandler:(void(^)())completeHandler;
 
-- (void)unloadThumbnails;
+- (void)unloadPhotoImages;
 
 @end
