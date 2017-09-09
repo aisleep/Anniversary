@@ -6,15 +6,18 @@
 //  Copyright © 2017年 小希. All rights reserved.
 //
 
-#import "AIQBasicViewController.h"
-#import "AIQCollectionView.h"
-#import "AIQCollectionViewCell.h"
+#import "AIQViewController.h"
+#import "AIQCollectionNode.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AIQCollectionViewController : UICollectionViewController <AIQCollectionViewDataSource>
+@interface AIQCollectionViewController : AIQViewController <ASCollectionDataSource, ASCollectionDelegate>
 
-@property (nonatomic, strong) __kindof AIQCollectionView *collectionView;
+@property (nonatomic, strong, readonly) AIQCollectionNode *collectionNode;
+
+@property (nonatomic, strong, readonly) UICollectionViewLayout *collectionViewLayout;
+
+- (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout;
 
 @end
 

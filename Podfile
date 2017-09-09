@@ -15,5 +15,6 @@ pod 'CocoaLumberjack'
 pod 'Masonry'
 pod 'DACircularProgress'
 pod 'UITableView+FDTemplateLayoutCell'
+pod "Texture"
 
 end

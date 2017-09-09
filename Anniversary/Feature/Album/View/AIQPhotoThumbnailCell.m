@@ -11,11 +11,10 @@
 
 @implementation AIQPhotoThumbnailCell
 
-- (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
+- (instancetype)init {
+    self = [super init];
     if (self) {
-        self.imageView.contentMode = UIViewContentModeScaleAspectFill;
-        self.imageView.clipsToBounds = YES;
+        self.imageNode.contentMode = UIViewContentModeScaleAspectFill;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(completeLoadImageNotification:) name:MWPHOTO_IMMEDIATELYREFRESHING_NOTIFICATION object:nil];;
     }
     return self;
@@ -29,23 +28,24 @@
 - (void)completeLoadImageNotification:(NSNotification *)notify {
     AIQPhoto *photo = notify.object;
     if (photo && photo == _photo) {
-        self.imageView.image = photo.underlyingImage;
+        self.imageNode.image = photo.underlyingImage;
     }
 }
 
 - (void)setPhoto:(AIQPhoto *)photo {
     _photo = photo;
     if (photo.underlyingImage) {
-        self.imageView.image = photo.underlyingImage;
+        self.imageNode.image = photo.underlyingImage;
     } else {
-        [_photo loadUnderlyingImageAndNotify];
+        [self onDidLoad:^(__kindof ASDisplayNode * _Nonnull node) {
+            [_photo loadUnderlyingImageAndNotify];
+        }];
     }
 }
 
-- (void)prepareForReuse {
-    [super prepareForReuse];
-    _photo = nil;
-    self.imageView.image = nil;
+- (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes {
+    [super applyLayoutAttributes:layoutAttributes];
+    self.imageNode.frame = self.bounds;
 }
 
 @end

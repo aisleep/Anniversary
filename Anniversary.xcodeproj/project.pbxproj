@@ -9,6 +9,13 @@
 /* Begin PBXBuildFile section */
 		0B0D76E77957B0B657F2D82F /* libPods-Anniversary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FB53C11A9894F739894CD0B3 /* libPods-Anniversary.a */; };
 		47009A471F618CA4007206C3 /* AIQAlbumBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 47009A461F618CA4007206C3 /* AIQAlbumBrowser.m */; };
+		47009A4B1F630883007206C3 /* AIQViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47009A4A1F630883007206C3 /* AIQViewController.m */; };
+		47009A4F1F6315B5007206C3 /* AIQTableNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 47009A4E1F6315B5007206C3 /* AIQTableNode.m */; };
+		47009A521F6322A4007206C3 /* AIQCollectionNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 47009A511F6322A4007206C3 /* AIQCollectionNode.m */; };
+		47009A551F63917D007206C3 /* AIQTableCellNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 47009A541F63917D007206C3 /* AIQTableCellNode.m */; };
+		47009A581F639443007206C3 /* AIQCollectionCellNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 47009A571F639443007206C3 /* AIQCollectionCellNode.m */; };
+		47009A5E1F63F8D6007206C3 /* AIQTapDetectingImageNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 47009A5D1F63F8D6007206C3 /* AIQTapDetectingImageNode.m */; };
+		47009A641F63FF9A007206C3 /* AIQZoomingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 47009A631F63FF9A007206C3 /* AIQZoomingScrollView.m */; };
 		AA6981761F5803E000BCF551 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6981751F5803E000BCF551 /* main.m */; };
 		AA6981791F5803E000BCF551 /* AIQAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6981781F5803E000BCF551 /* AIQAppDelegate.m */; };
 		AA69817F1F5803E000BCF551 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA69817D1F5803E000BCF551 /* Main.storyboard */; };
@@ -58,6 +65,21 @@
 		47009A451F618CA4007206C3 /* AIQAlbumBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIQAlbumBrowser.h; sourceTree = "<group>"; };
 		47009A461F618CA4007206C3 /* AIQAlbumBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIQAlbumBrowser.m; sourceTree = "<group>"; };
 		47009A481F619537007206C3 /* AIQAlbumBrowserProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIQAlbumBrowserProtocol.h; sourceTree = "<group>"; };
+		47009A491F630883007206C3 /* AIQViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIQViewController.h; sourceTree = "<group>"; };
+		47009A4A1F630883007206C3 /* AIQViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIQViewController.m; sourceTree = "<group>"; };
+		47009A4D1F6315B5007206C3 /* AIQTableNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIQTableNode.h; sourceTree = "<group>"; };
+		47009A4E1F6315B5007206C3 /* AIQTableNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIQTableNode.m; sourceTree = "<group>"; };
+		47009A501F6322A4007206C3 /* AIQCollectionNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIQCollectionNode.h; sourceTree = "<group>"; };
+		47009A511F6322A4007206C3 /* AIQCollectionNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIQCollectionNode.m; sourceTree = "<group>"; };
+		47009A531F63917D007206C3 /* AIQTableCellNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIQTableCellNode.h; sourceTree = "<group>"; };
+		47009A541F63917D007206C3 /* AIQTableCellNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIQTableCellNode.m; sourceTree = "<group>"; };
+		47009A561F639443007206C3 /* AIQCollectionCellNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIQCollectionCellNode.h; sourceTree = "<group>"; };
+		47009A571F639443007206C3 /* AIQCollectionCellNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIQCollectionCellNode.m; sourceTree = "<group>"; };
+		47009A5C1F63F8D6007206C3 /* AIQTapDetectingImageNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIQTapDetectingImageNode.h; sourceTree = "<group>"; };
+		47009A5D1F63F8D6007206C3 /* AIQTapDetectingImageNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIQTapDetectingImageNode.m; sourceTree = "<group>"; };
+		47009A621F63FF9A007206C3 /* AIQZoomingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIQZoomingScrollView.h; sourceTree = "<group>"; };
+		47009A631F63FF9A007206C3 /* AIQZoomingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIQZoomingScrollView.m; sourceTree = "<group>"; };
+		47009A651F6401E0007206C3 /* AIQAlbumBrowser_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIQAlbumBrowser_Private.h; sourceTree = "<group>"; };
 		AA6981711F5803E000BCF551 /* Anniversary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Anniversary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA6981751F5803E000BCF551 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AA6981771F5803E000BCF551 /* AIQAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AIQAppDelegate.h; sourceTree = "<group>"; };
@@ -165,6 +187,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		47009A4C1F63155C007206C3 /* Node */ = {
+			isa = PBXGroup;
+			children = (
+				47009A4D1F6315B5007206C3 /* AIQTableNode.h */,
+				47009A4E1F6315B5007206C3 /* AIQTableNode.m */,
+				47009A501F6322A4007206C3 /* AIQCollectionNode.h */,
+				47009A511F6322A4007206C3 /* AIQCollectionNode.m */,
+				47009A531F63917D007206C3 /* AIQTableCellNode.h */,
+				47009A541F63917D007206C3 /* AIQTableCellNode.m */,
+				47009A561F639443007206C3 /* AIQCollectionCellNode.h */,
+				47009A571F639443007206C3 /* AIQCollectionCellNode.m */,
+			);
+			path = Node;
+			sourceTree = "<group>";
+		};
 		AA6981681F5803E000BCF551 = {
 			isa = PBXGroup;
 			children = (
@@ -243,6 +280,7 @@
 		AA69818E1F580DAC00BCF551 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				47009A4C1F63155C007206C3 /* Node */,
 				AA6982191F5CF46500BCF551 /* View */,
 				AA6981E11F594BC600BCF551 /* Model */,
 				AA6981D41F5922FF00BCF551 /* Utility */,
@@ -258,6 +296,8 @@
 			children = (
 				AA6981901F580E1A00BCF551 /* AIQBasicViewController.h */,
 				AA6981911F580E1A00BCF551 /* AIQBasicViewController.m */,
+				47009A491F630883007206C3 /* AIQViewController.h */,
+				47009A4A1F630883007206C3 /* AIQViewController.m */,
 				AA6981931F580E5300BCF551 /* AIQBasicNavigationController.h */,
 				AA6981941F580E5300BCF551 /* AIQBasicNavigationController.m */,
 				AA6982131F5CF40300BCF551 /* AIQTableViewController.h */,
@@ -436,6 +476,7 @@
 				47009A451F618CA4007206C3 /* AIQAlbumBrowser.h */,
 				47009A461F618CA4007206C3 /* AIQAlbumBrowser.m */,
 				47009A481F619537007206C3 /* AIQAlbumBrowserProtocol.h */,
+				47009A651F6401E0007206C3 /* AIQAlbumBrowser_Private.h */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -447,6 +488,10 @@
 				AA69822A1F5D49E000BCF551 /* AIQPhotoThumbnailCell.m */,
 				AA69822C1F5D519800BCF551 /* AIQAlbumSelectView.h */,
 				AA69822D1F5D519800BCF551 /* AIQAlbumSelectView.m */,
+				47009A5C1F63F8D6007206C3 /* AIQTapDetectingImageNode.h */,
+				47009A5D1F63F8D6007206C3 /* AIQTapDetectingImageNode.m */,
+				47009A621F63FF9A007206C3 /* AIQZoomingScrollView.h */,
+				47009A631F63FF9A007206C3 /* AIQZoomingScrollView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -627,6 +672,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA6981951F580E5300BCF551 /* AIQBasicNavigationController.m in Sources */,
+				47009A551F63917D007206C3 /* AIQTableCellNode.m in Sources */,
 				AA6982281F5D3BD900BCF551 /* AIQAlbumViewModel.m in Sources */,
 				AA6981FE1F595CD800BCF551 /* MWCaptionView.m in Sources */,
 				AA6981DA1F59359D00BCF551 /* AIQAlbumsService.m in Sources */,
@@ -634,6 +680,7 @@
 				AA6981FF1F595CD800BCF551 /* MWGridCell.m in Sources */,
 				AA69821C1F5CF48D00BCF551 /* AIQTableView.m in Sources */,
 				AA6982031F595CD800BCF551 /* MWTapDetectingImageView.m in Sources */,
+				47009A641F63FF9A007206C3 /* AIQZoomingScrollView.m in Sources */,
 				AA6981921F580E1A00BCF551 /* AIQBasicViewController.m in Sources */,
 				AA69823D1F614D6500BCF551 /* AIQAppManager.m in Sources */,
 				AA6981C21F58F79D00BCF551 /* AIQImageLoader.m in Sources */,
@@ -644,10 +691,12 @@
 				AA69821F1F5CF4A300BCF551 /* AIQCollectionView.m in Sources */,
 				AA6982371F61275F00BCF551 /* AIQUIFactory.m in Sources */,
 				AA6982221F5CF56000BCF551 /* AIQTableViewCell.m in Sources */,
+				47009A581F639443007206C3 /* AIQCollectionCellNode.m in Sources */,
 				AA6982051F595CD800BCF551 /* MWZoomingScrollView.m in Sources */,
 				AA6981D31F5921FB00BCF551 /* UIImage+Extension.m in Sources */,
 				AA6982001F595CD800BCF551 /* MWGridViewController.m in Sources */,
 				AA6981A91F5815CF00BCF551 /* UIColor+Extension.m in Sources */,
+				47009A4B1F630883007206C3 /* AIQViewController.m in Sources */,
 				AA6981E01F5937DA00BCF551 /* AIQConstants.m in Sources */,
 				AA6981BC1F581A9F00BCF551 /* NSString+Extension.m in Sources */,
 				AA6982251F5D05C900BCF551 /* AIQCollectionViewCell.m in Sources */,
@@ -655,7 +704,9 @@
 				47009A471F618CA4007206C3 /* AIQAlbumBrowser.m in Sources */,
 				AA6982151F5CF40300BCF551 /* AIQTableViewController.m in Sources */,
 				AA6981D71F59234100BCF551 /* CGUtilities.m in Sources */,
+				47009A5E1F63F8D6007206C3 /* AIQTapDetectingImageNode.m in Sources */,
 				AA6982341F60F76F00BCF551 /* UIFont+Extension.m in Sources */,
+				47009A521F6322A4007206C3 /* AIQCollectionNode.m in Sources */,
 				AA6982311F5D548400BCF551 /* AIQAlbum.m in Sources */,
 				AA6981C51F590E3500BCF551 /* AIQTabBarController.m in Sources */,
 				AA6981E41F594F1E00BCF551 /* AIQPhoto.m in Sources */,
@@ -666,6 +717,7 @@
 				AA69822E1F5D519800BCF551 /* AIQAlbumSelectView.m in Sources */,
 				AA6981B61F58188B00BCF551 /* NSData+Extension.m in Sources */,
 				AA6982041F595CD800BCF551 /* MWTapDetectingView.m in Sources */,
+				47009A4F1F6315B5007206C3 /* AIQTableNode.m in Sources */,
 				AA6981761F5803E000BCF551 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -788,7 +840,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 4L9LAJK4Y6;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = "$(inherited)";
 				GCC_PREFIX_HEADER = "Anniversary/Anniversary-PrefixHeader.pch";
 				INFOPLIST_FILE = Anniversary/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -831,7 +883,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 4L9LAJK4Y6;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = "$(inherited)";
 				GCC_PREFIX_HEADER = "Anniversary/Anniversary-PrefixHeader.pch";
 				INFOPLIST_FILE = Anniversary/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;

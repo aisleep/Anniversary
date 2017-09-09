@@ -14,49 +14,29 @@
 
 @implementation AIQTableViewController
 
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        _clearsSelectionOnViewWillAppear = YES;
-    }
-    return self;
-}
-
 - (instancetype)initWithStyle:(UITableViewStyle)style {
-    self = [self initWithNibName:nil bundle:nil];
+    self = [super init];
     if (self) {
         _tableViewStyle = style;
+        _clearsSelectionOnViewWillAppear = YES;
+        _tableNode = [[AIQTableNode alloc] initWithStyle:_tableViewStyle];
+        _tableNode.dataSource = self;
+        _tableNode.delegate = self;
+        [self.node addSubnode:_tableNode];
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _tableView = [[AIQTableView alloc] initWithFrame:self.view.bounds style:_tableViewStyle];
-    _tableView.dataSource = self;
-    _tableView.delegate = self;
-    [self.view addSubview:_tableView];
+    _tableNode.frame = self.node.bounds;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if (_clearsSelectionOnViewWillAppear && _tableView.indexPathForSelectedRow) {
-        [_tableView deselectRowAtIndexPath:_tableView.indexPathForSelectedRow animated:animated];
+    if (_clearsSelectionOnViewWillAppear && _tableNode.indexPathForSelectedRow) {
+        [_tableNode deselectRowAtIndexPath:_tableNode.indexPathForSelectedRow animated:animated];
     }
-}
-
-#pragma mark - AIQTableViewDataSource
-- (NSArray<Class> *)classesForTableViewRegisterCell {
-    return @[[AIQTableViewCell class]];
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 0;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    AIQTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[AIQTableViewCell reuseIdentifier] forIndexPath:indexPath];
-    return cell;
 }
 
 @end

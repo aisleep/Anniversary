@@ -7,6 +7,7 @@
 //
 
 #import "AIQAlbumSelectView.h"
+#import "AIQViewController.h"
 #import "AIQAlbum.h"
 #import "AIQPhoto.h"
 
@@ -168,16 +169,16 @@ static const CGFloat CellHeight = 70.f;
     if (self) {
         _systemAlbums = [self transformAlbumToAlbumSelectCellVM:systemAlbums];
         _customAlbums = [self transformAlbumToAlbumSelectCellVM:customAlbums];
-        self.separatorStyle = UITableViewCellSeparatorStyleNone;
         self.backgroundColor = [UIColor whiteColor];
         self.delegate = self;
         self.dataSource = self;
+        self.separatorStyle = UITableViewCellSeparatorStyleNone;
         self.rowHeight = CellHeight;
     }
     return self;
 }
 
-- (void)showInViewController:(UIViewController *)controller animated:(BOOL)animated {
+- (void)showInViewController:(AIQViewController *)controller animated:(BOOL)animated {
     _pointYForTransition = 0;
     if (controller.navigationController && !controller.navigationController.navigationBarHidden) {
         CGRect frame = controller.navigationController.navigationBar.frame;
@@ -185,11 +186,11 @@ static const CGFloat CellHeight = 70.f;
         self.contentInset = UIEdgeInsetsMake(_pointYForTransition, 0, 0, 0);
     }
     if (!animated) {
-        [controller.view addSubview:self];
+        [controller.node.view addSubview:self];
         return;
     }
     self.transform = CGAffineTransformMakeTranslation(0, -(self.bounds.size.height - _pointYForTransition));
-    [controller.view addSubview:self];
+    [controller.node.view addSubview:self];
     [UIView animateWithDuration:0.25 animations:^{
         self.transform = CGAffineTransformIdentity;
     }];
@@ -240,7 +241,7 @@ static const CGFloat CellHeight = 70.f;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return _customAlbums.count ? 2 : 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
