@@ -6,10 +6,10 @@
 //  Copyright © 2017年 小希. All rights reserved.
 //
 
-#import "AIQCollectionViewCell.h"
+#import "AIQCollectionCellNode.h"
 
 @class AIQPhoto;
-@interface AIQPhotoThumbnailCell : AIQCollectionViewCell
+@interface AIQPhotoThumbnailCell : AIQCollectionCellNode
 
 @property (nonatomic, strong) AIQPhoto *photo;
 

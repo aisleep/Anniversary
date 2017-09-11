@@ -33,7 +33,7 @@ static const CGFloat numberOfline = 4.f;
 
 - (instancetype)init {
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    CGFloat itemSize = (kScreenWidth - CellSpacing * (numberOfline + 1)) / numberOfline;
+    CGFloat itemSize = PointPixelFloor((kScreenWidth - CellSpacing * (numberOfline + 1)) / numberOfline);
     flowLayout.itemSize = CGSizeMake(itemSize, itemSize);
     flowLayout.sectionInset = UIEdgeInsetsMake(CellSpacing, CellSpacing, CellSpacing, CellSpacing);
     flowLayout.minimumLineSpacing = CellSpacing;
@@ -54,7 +54,7 @@ static const CGFloat numberOfline = 4.f;
         }
         [self initializeTitleView];
         [self.albumViewModel fetchPhotosAtAlbum:self.albumViewModel.selectedAlbum completeHandler:^{
-            [self.collectionView reloadData];
+            [self.collectionNode reloadData];
         }];
     }];
 }
@@ -93,7 +93,7 @@ static const CGFloat numberOfline = 4.f;
             self.albumViewModel.selectedAlbum = selectedAlbum;
             [self updateTitleView];
             [self.albumViewModel fetchPhotosAtAlbum:selectedAlbum completeHandler:^{
-                [self.collectionView reloadData];
+                [self.collectionNode reloadData];
             }];
         };
     }
@@ -142,7 +142,7 @@ static const CGFloat numberOfline = 4.f;
     [_browser willMoveToParentViewController:self];
     [UIView animateWithDuration:0.3 animations:^(void) {
         _browser.view.frame = screenFrame;
-        self.collectionView.frame = CGRectOffset(screenFrame, 0, 1 * screenFrame.size.height);
+        self.collectionNode.frame = CGRectOffset(screenFrame, 0, 1 * screenFrame.size.height);
     } completion:^(BOOL finished) {
         [_browser didMoveToParentViewController:self];
     }];
@@ -155,7 +155,7 @@ static const CGFloat numberOfline = 4.f;
     
     // Remember previous content offset
     NSUInteger currentIndex = _browser.currentIndex;
-    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:currentIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+    [self.collectionNode scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:currentIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
     
     // Restore action button if it was removed
 //    if (_gridPreviousRightNavItem == _actionButton && _actionButton) {
@@ -164,7 +164,7 @@ static const CGFloat numberOfline = 4.f;
     
     // Position prior to hide animation
     CGRect screenFrame = self.view.bounds;
-    self.collectionView.frame = CGRectOffset(screenFrame, 0, 1 * screenFrame.size.height);
+    self.collectionNode.frame = CGRectOffset(screenFrame, 0, 1 * screenFrame.size.height);
     
     // Remember and remove controller now so things can detect a nil grid controller
     AIQAlbumBrowser *tmpBrowser = _browser;
@@ -176,7 +176,7 @@ static const CGFloat numberOfline = 4.f;
     // Animate, hide grid and show paging scroll view
     [UIView animateWithDuration:0.3 animations:^{
         tmpBrowser.view.frame = CGRectOffset(screenFrame, 0, -1 * screenFrame.size.height);
-        self.collectionView.frame = screenFrame;
+        self.collectionNode.frame = screenFrame;
         self.navigationItem.title = nil;
         self.navigationItem.titleView = self.titleView;
     } completion:^(BOOL finished) {
@@ -187,25 +187,25 @@ static const CGFloat numberOfline = 4.f;
 }
 
 #pragma mark - CollectionView DataSource && Delegate
-- (NSArray<Class> *)classesForCollectionViewRegisterCell {
-    return @[[AIQPhotoThumbnailCell class]];
-}
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+- (NSInteger)collectionNode:(ASCollectionNode *)collectionNode numberOfItemsInSection:(NSInteger)section {
     return _albumViewModel.numberOfPhoto;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    AIQPhotoThumbnailCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[AIQPhotoThumbnailCell reuseIdentifier]forIndexPath:indexPath];
-    if (indexPath.item < _albumViewModel.thumbnailsForSelectedAlbum.count) {
-        AIQPhoto *photo = [_albumViewModel.thumbnailsForSelectedAlbum objectAtIndex:indexPath.item];
+- (ASCellNodeBlock)collectionNode:(ASCollectionNode *)collectionNode nodeBlockForItemAtIndexPath:(NSIndexPath *)indexPath {
+    AIQPhoto *photo = [_albumViewModel.thumbnailsForSelectedAlbum objectAtIndex:indexPath.item];
+    return ^{
+        AIQPhotoThumbnailCell *cell = [[AIQPhotoThumbnailCell alloc] init];
         [cell setPhoto:photo];
-    }
-    return cell;
+        return cell;
+    };
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+- (void)collectionNode:(ASCollectionNode *)collectionNode didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     [self showAlbumBrowserInCurrentPhotoIndex:indexPath.item];
+}
+
+- (BOOL)shouldBatchFetchForCollectionNode:(ASCollectionNode *)collectionNode {
+    return NO;
 }
 
 #pragma mark - AIQAlbumBrowserDelegate

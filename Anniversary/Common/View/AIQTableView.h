@@ -14,11 +14,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol AIQTableViewDataSource <UITableViewDataSource>
 
-@required
+@optional
 - (NSArray<Class> *)classesForTableViewRegisterCell;
 - (NSArray<Class> *)classesForTableViewRegisterHeaderFooterView;
 
 @end
+
+@class AIQTableNode;
 
 @interface AIQTableView : UITableView
 

@@ -11,17 +11,16 @@
 
 @interface AIQPhotoThumbnailCell ()
 
-@property (nonatomic, strong) UIImageView *playIcon;
+@property (nonatomic, strong) ASImageNode *playIcon;
 
 @end
 
 @implementation AIQPhotoThumbnailCell
 
-- (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
+- (instancetype)init {
+    self = [super init];
     if (self) {
-        self.imageView.contentMode = UIViewContentModeScaleAspectFill;
-        self.imageView.clipsToBounds = YES;
+        self.imageNode.contentMode = UIViewContentModeScaleAspectFill;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(completeLoadImageNotification:) name:MWPHOTO_IMMEDIATELYREFRESHING_NOTIFICATION object:nil];;
     }
     return self;
@@ -35,38 +34,37 @@
 - (void)completeLoadImageNotification:(NSNotification *)notify {
     AIQPhoto *photo = notify.object;
     if (photo && photo == _photo) {
-        self.imageView.image = photo.underlyingImage;
+        self.imageNode.image = photo.underlyingImage;
     }
 }
 
 - (void)setPhoto:(AIQPhoto *)photo {
     _photo = photo;
     if (photo.underlyingImage) {
-        self.imageView.image = photo.underlyingImage;
+        self.imageNode.image = photo.underlyingImage;
     } else {
-        [_photo loadUnderlyingImageAndNotify];
+        [self onDidLoad:^(__kindof ASDisplayNode * _Nonnull node) {
+            [_photo loadUnderlyingImageAndNotify];
+        }];
     }
     if (_photo.isVideo) {
         self.playIcon.hidden = NO;
     }
 }
 
-- (UIImageView *)playIcon {
+- (ASImageNode *)playIcon {
     if (!_playIcon) {
-        _playIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"btn_videoplay_m"]];
-        [self.contentView addSubview:_playIcon];
-        [_playIcon mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.center.equalTo(self.contentView);
-        }];
+        _playIcon = [[ASImageNode alloc] init];
+        _playIcon.image = [UIImage imageNamed:@"btn_videoplay_m"];
+        [self addSubnode:_playIcon];
+        _playIcon.position = self.position;
     }
     return _playIcon;
 }
 
-- (void)prepareForReuse {
-    [super prepareForReuse];
-    _photo = nil;
-    self.imageView.image = nil;
-    _playIcon.hidden = YES;
+- (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes {
+    [super applyLayoutAttributes:layoutAttributes];
+    self.imageNode.frame = self.bounds;
 }
 
 @end

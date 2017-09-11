@@ -6,18 +6,19 @@
 //  Copyright © 2017年 小希. All rights reserved.
 //
 
-#import "AIQBasicViewController.h"
+#import "AIQViewController.h"
 #import "AIQAlbumBrowserProtocol.h"
 #import "MWCaptionView.h"
 #import "AIQPhoto.h"
 
-@interface AIQAlbumBrowser : AIQBasicViewController
+@interface AIQAlbumBrowser : AIQViewController
 
 @property (nonatomic, weak) id <AIQAlbumBrowserDataSource> dataSource;
 @property (nonatomic, weak) id <AIQAlbumBrowserDelegate> delegate;
 
 @property (nonatomic, readonly) NSUInteger currentIndex;
 @property (nonatomic) BOOL zoomPhotosToFill;
+@property (nonatomic) BOOL enableSwipeToDismiss;
 
 // Reloads the photo browser and refetches data
 - (void)reloadData;

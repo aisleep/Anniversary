@@ -7,76 +7,12 @@
 //
 
 
-#import <MBProgressHUD/MBProgressHUD.h>
-#import <AVKit/AVKit.h>
 #import <AVFoundation/AVPlayer.h>
 #import <QuartzCore/QuartzCore.h>
 #import "AIQAlbumBrowser.h"
+#import "AIQAlbumBrowser_Private.h"
 
-#import "MWCommon.h"
-#import "UIImage+MWPhotoBrowser.h"
-#import "MWZoomingScrollView.h"
-
-#define PADDING                  10
-
-static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
-
-// Declare private methods of browser
-@interface AIQAlbumBrowser () <AVPlayerViewControllerDelegate, UIScrollViewDelegate> {
-    
-    // Data
-    NSUInteger _photoCount;
-    
-    // Views
-    UIScrollView *_pagingScrollView;
-    
-    // Paging & layout
-    NSMutableSet *_visiblePages, *_recycledPages;
-    NSUInteger _currentPageIndex;
-    NSUInteger _previousPageIndex;
-    CGRect _previousLayoutBounds;
-    NSUInteger _pageIndexBeforeRotation;
-    
-    // Navigation & controls
-    UIToolbar *_toolbar;
-    NSTimer *_controlVisibilityTimer;
-    UIBarButtonItem *_previousButton, *_nextButton, *_actionButton, *_doneButton;
-    MBProgressHUD *_progressHUD;
-    
-    // Appearance
-    BOOL _previousNavBarHidden;
-    BOOL _previousNavBarTranslucent;
-    UIBarStyle _previousNavBarStyle;
-    UIColor *_previousNavBarTintColor;
-    UIColor *_previousNavBarBarTintColor;
-    UIBarButtonItem *_previousViewControllerBackButton;
-    UIImage *_previousNavigationBarBackgroundImageDefault;
-    UIImage *_previousNavigationBarBackgroundImageLandscapePhone;
-    NSTimeInterval _delayToHideElements;
-    
-    // Video
-    AVPlayerViewController *_currentVideoPlayerViewController;
-    NSUInteger _currentVideoIndex;
-    UIActivityIndicatorView *_currentVideoLoadingIndicator;
-    
-    // Misc
-    BOOL _hasBelongedToViewController;
-    BOOL _statusBarShouldBeHidden;
-    BOOL _displayActionButton;
-    BOOL _performingLayout;
-    BOOL _rotating;
-    BOOL _viewIsActive; // active as in it's in the view heirarchy
-    BOOL _didSavePreviousStateOfNavBar;
-    BOOL _skipNextPagingScrollViewPositioning;
-    BOOL _viewHasAppearedInitially;
-    CGPoint _currentGridContentOffset;
-    
-}
-
-// Properties
-@property (nonatomic) UIActivityViewController *activityViewController;
-
-@end
+#import "AIQZoomingScrollView.h"
 
 @implementation AIQAlbumBrowser
 
@@ -108,6 +44,7 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
     _currentVideoIndex = NSUIntegerMax;
     _displayActionButton = YES;
     _zoomPhotosToFill = YES;
+    _enableSwipeToDismiss = YES;
     _performingLayout = NO; // Reset on view did appear
     _rotating = NO;
     _viewIsActive = NO;
@@ -128,7 +65,7 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
 
 - (void)dealloc {
     [self clearCurrentVideo];
-    _pagingScrollView.delegate = nil;
+    _pagingScrollView.view.delegate = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -150,15 +87,17 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
     
     // Setup paging scrolling view
     CGRect pagingScrollViewFrame = [self frameForPagingScrollView];
-    _pagingScrollView = [[UIScrollView alloc] initWithFrame:pagingScrollViewFrame];
+    _pagingScrollView = [[ASScrollNode alloc] init];
+    _pagingScrollView.frame = pagingScrollViewFrame;
+    _pagingScrollView.automaticallyManagesContentSize = NO;
     _pagingScrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    _pagingScrollView.pagingEnabled = YES;
-    _pagingScrollView.delegate = self;
-    _pagingScrollView.showsHorizontalScrollIndicator = NO;
-    _pagingScrollView.showsVerticalScrollIndicator = NO;
+    _pagingScrollView.view.pagingEnabled = YES;
+    _pagingScrollView.view.delegate = self;
+    _pagingScrollView.view.showsHorizontalScrollIndicator = NO;
+    _pagingScrollView.view.showsVerticalScrollIndicator = NO;
     _pagingScrollView.backgroundColor = [UIColor blackColor];
-    _pagingScrollView.contentSize = [self contentSizeForPagingScrollView];
-    [self.view addSubview:_pagingScrollView];
+    _pagingScrollView.view.contentSize = [self contentSizeForPagingScrollView];
+    [self.node addSubnode:_pagingScrollView];
     
     // Toolbar
     _toolbar = [[UIToolbar alloc] initWithFrame:[self frameForToolbarAtOrientation:[UIApplication sharedApplication].statusBarOrientation]];
@@ -185,11 +124,11 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
     [self reloadData];
     
     // Swipe to dismiss
-//    if (_enableSwipeToDismiss) {
+    if (_enableSwipeToDismiss) {
         UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(doneButtonPressed:)];
         swipeGesture.direction = UISwipeGestureRecognizerDirectionUp;
         [self.view addGestureRecognizer:swipeGesture];
-//    }
+    }
 }
 
 - (void)performLayout {
@@ -286,7 +225,7 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
     [self updateNavigation];
     
     // Content offset
-    _pagingScrollView.contentOffset = [self contentOffsetForPageAtIndex:_currentPageIndex];
+    _pagingScrollView.view.contentOffset = [self contentOffsetForPageAtIndex:_currentPageIndex];
     [self tilePages];
     _performingLayout = NO;
     
@@ -398,15 +337,13 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
     _skipNextPagingScrollViewPositioning = NO;
     
     // Recalculate contentSize based on current orientation
-    _pagingScrollView.contentSize = [self contentSizeForPagingScrollView];
+    _pagingScrollView.view.contentSize = [self contentSizeForPagingScrollView];
     
     // Adjust frames and configuration of each visible page
-    for (MWZoomingScrollView *page in _visiblePages) {
+    for (AIQZoomingScrollView *page in _visiblePages) {
         NSUInteger index = page.index;
         page.frame = [self frameForPageAtIndex:index];
-        if (page.captionView) {
-            page.captionView.frame = [self frameForCaptionView:page.captionView atIndex:index];
-        }
+       
         if (page.selectedButton) {
             page.selectedButton.frame = [self frameForSelectedButton:page.selectedButton atIndex:index];
         }
@@ -427,7 +364,7 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
     [self positionVideoLoadingIndicator];
     
     // Adjust contentOffset to preserve page location based on values collected prior to location
-    _pagingScrollView.contentOffset = [self contentOffsetForPageAtIndex:indexPriorToLayout];
+    _pagingScrollView.view.contentOffset = [self contentOffsetForPageAtIndex:indexPriorToLayout];
     [self didStartViewingPageAtIndex:_currentPageIndex]; // initial
     
     // Reset
@@ -505,8 +442,8 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
     
     // Update layout
     if ([self isViewLoaded]) {
-        while (_pagingScrollView.subviews.count) {
-            [[_pagingScrollView.subviews lastObject] removeFromSuperview];
+        while (_pagingScrollView.view.subviews.count) {
+            [[_pagingScrollView.view.subviews lastObject] removeFromSuperview];
         }
         [self performLayout];
         [self.view setNeedsLayout];
@@ -585,7 +522,7 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
 }
 
 - (void)loadAdjacentPhotosIfNecessary:(id<MWPhoto>)photo {
-    MWZoomingScrollView *page = [self pageDisplayingPhoto:photo];
+    AIQZoomingScrollView *page = [self pageDisplayingPhoto:photo];
     if (page) {
         // If page is current page then initiate loading of previous and next pages
         NSUInteger pageIndex = page.index;
@@ -614,7 +551,7 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
 
 - (void)handleMWPhotoLoadingDidEndNotification:(NSNotification *)notification {
     id <MWPhoto> photo = [notification object];
-    MWZoomingScrollView *page = [self pageDisplayingPhoto:photo];
+    AIQZoomingScrollView *page = [self pageDisplayingPhoto:photo];
     if (page) {
         if ([photo underlyingImage]) {
             // Successful load
@@ -647,15 +584,14 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
     
     // Recycle no longer needed pages
     NSInteger pageIndex;
-    for (MWZoomingScrollView *page in _visiblePages) {
+    for (AIQZoomingScrollView *page in _visiblePages) {
         pageIndex = page.index;
         if (pageIndex < (NSUInteger)iFirstIndex || pageIndex > (NSUInteger)iLastIndex) {
             [_recycledPages addObject:page];
-            [page.captionView removeFromSuperview];
             [page.selectedButton removeFromSuperview];
             [page.playButton removeFromSuperview];
             [page prepareForReuse];
-            [page removeFromSuperview];
+            [page removeFromSupernode];
             DDLogDebug(@"Removed page at index %lu", (unsigned long)pageIndex);
         }
     }
@@ -668,23 +604,23 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
         if (![self isDisplayingPageForIndex:index]) {
             
             // Add new page
-            MWZoomingScrollView *page = [self dequeueRecycledPage];
+            AIQZoomingScrollView *page = [self dequeueRecycledPage];
             if (!page) {
-                page = [[MWZoomingScrollView alloc] initWithPhotoBrowser:(MWPhotoBrowser *)self];
+                page = [[AIQZoomingScrollView alloc] initWithPhotoBrowser:self];
             }
             [_visiblePages addObject:page];
             [self configurePage:page forIndex:index];
             
-            [_pagingScrollView addSubview:page];
+            [_pagingScrollView addSubnode:page];
             DDLogDebug(@"Added page at index %lu", (unsigned long)index);
             
             // Add caption
-            MWCaptionView *captionView = [self captionViewForPhotoAtIndex:index];
-            if (captionView) {
-                captionView.frame = [self frameForCaptionView:captionView atIndex:index];
-                [_pagingScrollView addSubview:captionView];
-                page.captionView = captionView;
-            }
+//            MWCaptionView *captionView = [self captionViewForPhotoAtIndex:index];
+//            if (captionView) {
+//                captionView.frame = [self frameForCaptionView:captionView atIndex:index];
+//                [_pagingScrollView addSubview:captionView];
+//                page.captionView = captionView;
+//            }
             
             // Add play button if needed
             if (page.displayingVideo) {
@@ -693,7 +629,7 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
                 [playButton addTarget:self action:@selector(playButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
                 [playButton sizeToFit];
                 playButton.frame = [self frameForPlayButton:playButton atIndex:index];
-                [_pagingScrollView addSubview:playButton];
+                [_pagingScrollView.view addSubview:playButton];
                 page.playButton = playButton;
             }
             
@@ -707,7 +643,7 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
             selectedButton.adjustsImageWhenHighlighted = NO;
             [selectedButton addTarget:self action:@selector(selectedButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
             selectedButton.frame = [self frameForSelectedButton:selectedButton atIndex:index];
-            [_pagingScrollView addSubview:selectedButton];
+            [_pagingScrollView.view addSubview:selectedButton];
             page.selectedButton = selectedButton;
             selectedButton.selected = [self photoIsSelectedAtIndex:index];
             
@@ -718,7 +654,7 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
 
 - (void)updateVisiblePageStates {
     NSSet *copy = [_visiblePages copy];
-    for (MWZoomingScrollView *page in copy) {
+    for (AIQZoomingScrollView *page in copy) {
         
         // Update selection
         page.selectedButton.selected = [self photoIsSelectedAtIndex:page.index];
@@ -727,14 +663,14 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
 }
 
 - (BOOL)isDisplayingPageForIndex:(NSUInteger)index {
-    for (MWZoomingScrollView *page in _visiblePages)
+    for (AIQZoomingScrollView *page in _visiblePages)
         if (page.index == index) return YES;
     return NO;
 }
 
-- (MWZoomingScrollView *)pageDisplayedAtIndex:(NSUInteger)index {
-    MWZoomingScrollView *thePage = nil;
-    for (MWZoomingScrollView *page in _visiblePages) {
+- (AIQZoomingScrollView *)pageDisplayedAtIndex:(NSUInteger)index {
+    AIQZoomingScrollView *thePage = nil;
+    for (AIQZoomingScrollView *page in _visiblePages) {
         if (page.index == index) {
             thePage = page; break;
         }
@@ -742,9 +678,9 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
     return thePage;
 }
 
-- (MWZoomingScrollView *)pageDisplayingPhoto:(id<MWPhoto>)photo {
-    MWZoomingScrollView *thePage = nil;
-    for (MWZoomingScrollView *page in _visiblePages) {
+- (AIQZoomingScrollView *)pageDisplayingPhoto:(id<MWPhoto>)photo {
+    AIQZoomingScrollView *thePage = nil;
+    for (AIQZoomingScrollView *page in _visiblePages) {
         if (page.photo == photo) {
             thePage = page; break;
         }
@@ -752,14 +688,14 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
     return thePage;
 }
 
-- (void)configurePage:(MWZoomingScrollView *)page forIndex:(NSUInteger)index {
+- (void)configurePage:(AIQZoomingScrollView *)page forIndex:(NSUInteger)index {
     page.frame = [self frameForPageAtIndex:index];
     page.index = index;
     page.photo = [self photoAtIndex:index];
 }
 
-- (MWZoomingScrollView *)dequeueRecycledPage {
-    MWZoomingScrollView *page = [_recycledPages anyObject];
+- (AIQZoomingScrollView *)dequeueRecycledPage {
+    AIQZoomingScrollView *page = [_recycledPages anyObject];
     if (page) {
         [_recycledPages removeObject:page];
     }
@@ -938,7 +874,7 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
     // Change page
     if (index < [self numberOfPhotos]) {
         CGRect pageFrame = [self frameForPageAtIndex:index];
-        [_pagingScrollView setContentOffset:CGPointMake(pageFrame.origin.x - PADDING, 0) animated:animated];
+        [_pagingScrollView.view setContentOffset:CGPointMake(pageFrame.origin.x - PADDING, 0) animated:animated];
         [self updateNavigation];
     }
     
@@ -968,7 +904,7 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
     UIButton *selectedButton = (UIButton *)sender;
     selectedButton.selected = !selectedButton.selected;
     NSUInteger index = NSUIntegerMax;
-    for (MWZoomingScrollView *page in _visiblePages) {
+    for (AIQZoomingScrollView *page in _visiblePages) {
         if (page.selectedButton == selectedButton) {
             index = page.index;
             break;
@@ -994,7 +930,7 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
 
 - (NSUInteger)indexForPlayButton:(UIView *)playButton {
     NSUInteger index = NSUIntegerMax;
-    for (MWZoomingScrollView *page in _visiblePages) {
+    for (AIQZoomingScrollView *page in _visiblePages) {
         if (page.playButton == playButton) {
             index = page.index;
             break;
@@ -1079,7 +1015,7 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
         _currentVideoLoadingIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectZero];
         [_currentVideoLoadingIndicator sizeToFit];
         [_currentVideoLoadingIndicator startAnimating];
-        [_pagingScrollView addSubview:_currentVideoLoadingIndicator];
+        [_pagingScrollView.view addSubview:_currentVideoLoadingIndicator];
         [self positionVideoLoadingIndicator];
         [[self pageDisplayedAtIndex:pageIndex] playButton].hidden = YES;
     }
@@ -1123,17 +1059,6 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
         // Toolbar
         _toolbar.frame = CGRectOffset([self frameForToolbarAtOrientation:[UIApplication sharedApplication].statusBarOrientation], 0, animatonOffset);
         
-        // Captions
-        for (MWZoomingScrollView *page in _visiblePages) {
-            if (page.captionView) {
-                MWCaptionView *v = page.captionView;
-                // Pass any index, all we're interested in is the Y
-                CGRect captionFrame = [self frameForCaptionView:v atIndex:0];
-                captionFrame.origin.x = v.frame.origin.x; // Reset X
-                v.frame = CGRectOffset(captionFrame, 0, animatonOffset);
-            }
-        }
-        
     }
     [UIView animateWithDuration:animationDuration animations:^(void) {
         
@@ -1147,21 +1072,8 @@ static void * MWVideoPlayerObservation = &MWVideoPlayerObservation;
         if (hidden) _toolbar.frame = CGRectOffset(_toolbar.frame, 0, animatonOffset);
         _toolbar.alpha = alpha;
         
-        // Captions
-        for (MWZoomingScrollView *page in _visiblePages) {
-            if (page.captionView) {
-                MWCaptionView *v = page.captionView;
-                // Pass any index, all we're interested in is the Y
-                CGRect captionFrame = [self frameForCaptionView:v atIndex:0];
-                captionFrame.origin.x = v.frame.origin.x; // Reset X
-                if (hidden) captionFrame = CGRectOffset(captionFrame, 0, animatonOffset);
-                v.frame = captionFrame;
-                v.alpha = alpha;
-            }
-        }
-        
         // Selected buttons
-        for (MWZoomingScrollView *page in _visiblePages) {
+        for (AIQZoomingScrollView *page in _visiblePages) {
             if (page.selectedButton) {
                 UIButton *v = page.selectedButton;
                 CGRect newFrame = [self frameForSelectedButton:v atIndex:0];

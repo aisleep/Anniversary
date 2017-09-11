@@ -222,7 +222,7 @@
     PHImageRequestOptions *options = [PHImageRequestOptions new];
     options.networkAccessAllowed = NO;
     options.resizeMode = PHImageRequestOptionsResizeModeFast;
-    options.deliveryMode = PHImageRequestOptionsDeliveryModeFastFormat;
+    options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
     options.synchronous = NO;
     options.progressHandler = ^(double progress, NSError *error, BOOL *stop, NSDictionary *info) {
         NSDictionary* dict = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -230,7 +230,7 @@
                               self, MWPHOTO_NOTIFICATION_INFOKEY_PHOTO, nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:MWPHOTO_PROGRESS_NOTIFICATION object:dict];
     };
-    _assetRequestID = [imageManager requestImageForAsset:asset targetSize:targetSize contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage *result, NSDictionary *info) {
+    _assetRequestID = [imageManager requestImageForAsset:asset targetSize:targetSize contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage *result, NSDictionary *info) {
         dispatch_async(dispatch_get_main_queue(), ^{
             _isInCloud = [info[PHImageResultIsInCloudKey] boolValue];
             self.underlyingImage = result;

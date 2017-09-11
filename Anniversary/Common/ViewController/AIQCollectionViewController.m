@@ -7,41 +7,35 @@
 //
 
 #import "AIQCollectionViewController.h"
+#import "AIQCollectionNode.h"
 
 @interface AIQCollectionViewController ()
 
 @end
 
 @implementation AIQCollectionViewController
-@dynamic collectionView;
 
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+- (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
+    self = [super init];
     if (self) {
-        self.installsStandardGestureForInteractiveMovement = NO;
+        _collectionViewLayout = layout;
+        _collectionNode = [[AIQCollectionNode alloc] initWithCollectionViewLayout:layout];
+        _collectionNode.dataSource = self;
+        _collectionNode.delegate = self;
+        [self.node addSubnode:self.collectionNode];
     }
     return self;
-}
-
-- (void)loadView {
-    [super loadView];
-    self.collectionView = [[AIQCollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:self.collectionViewLayout];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    _collectionNode.frame = self.node.bounds;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-
-#pragma mark - AIQCollectionViewDataSource
-- (NSArray<Class> *)classesForTableViewRegisterCell {
-    return @[[AIQCollectionViewCell reuseIdentifier]];
 }
 
 @end

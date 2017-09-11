@@ -10,6 +10,8 @@
 #import "AIQAlbumsService.h"
 #import "AIQPhoto.h"
 
+static CGFloat OriginalImageMaximumSize = 5000;
+
 @interface AIQAlbumViewModel ()
 
 @property (nonatomic, assign) CGSize thumbnailsSize;
@@ -49,11 +51,12 @@
     [AIQAlbumsService fetchAllPhotoAssetsInAlbum:album.assetCollection completeHandler:^(NSArray<PHAsset *> * _Nonnull photos) {
         NSMutableArray *thumbnailPhotoModels = [NSMutableArray arrayWithCapacity:photos.count];
         NSMutableArray *originalPhotoModels = [NSMutableArray arrayWithCapacity:photos.count];
+        CGSize originalMaxSize = CGSizeMake(OriginalImageMaximumSize, OriginalImageMaximumSize);
         [photos enumerateObjectsUsingBlock:^(PHAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             AIQPhoto *thumbnailphoto = [AIQPhoto photoWithAsset:obj targetSize:_thumbnailsSize];
             thumbnailphoto.isThumbnail = YES;
             [thumbnailPhotoModels addObject:thumbnailphoto];
-            AIQPhoto *originalphoto = [AIQPhoto photoWithAsset:obj targetSize:PHImageManagerMaximumSize];
+            AIQPhoto *originalphoto = [AIQPhoto photoWithAsset:obj targetSize:originalMaxSize];
             [originalPhotoModels addObject:originalphoto];
         }];
         _numberOfPhoto = photos.count;

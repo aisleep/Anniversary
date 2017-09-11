@@ -8,7 +8,7 @@
 
 #import "AIQTableView.h"
 
-@class AIQAlbum;
+@class AIQAlbum, AIQViewController;
 @interface AIQAlbumSelectView : AIQTableView
 
 @property (nonatomic, strong) void(^selectAlbumHanler)(AIQAlbum *selectedAlbum);
@@ -17,7 +17,7 @@
                      systemAlbums:(NSArray<AIQAlbum *> *)systemAlbums
                      customAlbums:(NSArray<AIQAlbum *> *)customAlbums;
 
-- (void)showInViewController:(UIViewController *)controller animated:(BOOL)animated;
+- (void)showInViewController:(AIQViewController *)controller animated:(BOOL)animated;
 
 - (void)hideAnimated:(BOOL)animated;
 
