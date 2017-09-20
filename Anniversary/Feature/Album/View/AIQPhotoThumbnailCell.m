@@ -40,6 +40,9 @@
 
 - (void)setPhoto:(AIQPhoto *)photo {
     _photo = photo;
+    if (!_photo) {
+        return;
+    }
     if (photo.underlyingImage) {
         self.imageNode.image = photo.underlyingImage;
     } else {

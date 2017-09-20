@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "MWPhotoProtocol.h"
 
-@class AIQAlbumBrowser, MWCaptionView;
+@class AIQAlbumBrowser;
 
 @protocol AIQAlbumBrowserDataSource <NSObject>
 
@@ -24,7 +24,6 @@
 @protocol AIQAlbumBrowserDelegate  <NSObject>
 
 @optional
-- (MWCaptionView *)photoBrowser:(AIQAlbumBrowser *)photoBrowser captionViewForPhotoAtIndex:(NSUInteger)index;
 - (void)photoBrowser:(AIQAlbumBrowser *)photoBrowser updateNavigationTitleAtIndex:(NSUInteger)index;
 - (void)photoBrowser:(AIQAlbumBrowser *)photoBrowser didDisplayPhotoAtIndex:(NSUInteger)index;
 - (void)photoBrowser:(AIQAlbumBrowser *)photoBrowser actionButtonPressedForPhotoAtIndex:(NSUInteger)index;

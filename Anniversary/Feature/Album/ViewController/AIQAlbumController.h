@@ -8,6 +8,16 @@
 
 #import "AIQCollectionViewController.h"
 
+typedef NS_ENUM(NSInteger, AIQAlbumSelectMode) {
+    AIQAlbumSelectModeSingle,
+    AIQAlbumSelectModeMultiple,
+};
+
+@class AIQPhoto;
 @interface AIQAlbumController : AIQCollectionViewController
+
+@property (nonatomic, assign) AIQAlbumSelectMode selectMode;
+
+@property (nonatomic, strong) void(^completeSelectedHanlder)(NSArray<AIQPhoto *> *selectedPhotos);
 
 @end

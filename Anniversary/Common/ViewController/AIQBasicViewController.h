@@ -6,8 +6,8 @@
 //  Copyright © 2017年 小希. All rights reserved.
 //
 
-#import <AsyncDisplayKit/AsyncDisplayKit.h>
+#import <UIKit/UIKit.h>
 
-@interface AIQBasicViewController : ASViewController
+@interface AIQBasicViewController : UIViewController
 
 @end

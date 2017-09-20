@@ -12,6 +12,6 @@
 
 - (void)returnToPreviousPage;
 
-- (void)aiq_setBackBarItem;
+- (UIBarButtonItem *)aiq_BackBarItem;
 
 @end

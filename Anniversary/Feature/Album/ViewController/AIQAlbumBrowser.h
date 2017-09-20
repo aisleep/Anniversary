@@ -20,6 +20,8 @@
 @property (nonatomic) BOOL zoomPhotosToFill;
 @property (nonatomic) BOOL enableSwipeToDismiss;
 
+@property (nonatomic, strong) UIToolbar *customToolbar;
+
 // Reloads the photo browser and refetches data
 - (void)reloadData;
 

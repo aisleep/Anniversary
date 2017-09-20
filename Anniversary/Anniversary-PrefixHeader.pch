@@ -31,5 +31,6 @@ static const DDLogLevel ddLogLevel = DDLogLevelInfo;
 #import "UIImage+Extension.h"
 #import "UIColor+Extension.h"
 #import "UIFont+Extension.h"
+#import "UIViewController+Extension.h"
 
 #endif /* Anniversary_PrefixHeader_pch */

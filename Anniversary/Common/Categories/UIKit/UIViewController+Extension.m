@@ -10,9 +10,16 @@
 
 @implementation UIViewController (Extension)
 
-//- (void)aiq_setBackBarItem {
-//    UIBarButtonItem *backBarItem = [UIBarButtonItem alloc] initWithImage:<#(nullable UIImage *)#> style:<#(UIBarButtonItemStyle)#> target:<#(nullable id)#> action:<#(nullable SEL)#>
-//    self.navigationItem.leftBarButtonItem
-//}
+- (void)returnToPreviousPage {
+    if (self.navigationController && self.navigationController.viewControllers.firstObject != self) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+- (UIBarButtonItem *)aiq_BackBarItem {
+   return [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_nav_back"] style:UIBarButtonItemStyleDone target:self action:@selector(returnToPreviousPage)];
+}
 
 @end

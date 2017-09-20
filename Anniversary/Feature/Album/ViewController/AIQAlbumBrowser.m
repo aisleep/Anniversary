@@ -100,22 +100,10 @@
     [self.node addSubnode:_pagingScrollView];
     
     // Toolbar
-    _toolbar = [[UIToolbar alloc] initWithFrame:[self frameForToolbarAtOrientation:[UIApplication sharedApplication].statusBarOrientation]];
-    _toolbar.tintColor = [UIColor whiteColor];
-    _toolbar.barTintColor = nil;
-    [_toolbar setBackgroundImage:nil forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
-    [_toolbar setBackgroundImage:nil forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsCompact];
-    _toolbar.barStyle = UIBarStyleBlackTranslucent;
-    _toolbar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
-    
-    // Toolbar Items
-//    if (self.displayNavArrows) {
-        NSString *arrowPathFormat = @"MWPhotoBrowser.bundle/UIBarButtonItemArrow%@";
-        UIImage *previousButtonImage = [UIImage imageForResourcePath:[NSString stringWithFormat:arrowPathFormat, @"Left"] ofType:@"png" inBundle:[NSBundle bundleForClass:[self class]]];
-        UIImage *nextButtonImage = [UIImage imageForResourcePath:[NSString stringWithFormat:arrowPathFormat, @"Right"] ofType:@"png" inBundle:[NSBundle bundleForClass:[self class]]];
-        _previousButton = [[UIBarButtonItem alloc] initWithImage:previousButtonImage style:UIBarButtonItemStylePlain target:self action:@selector(gotoPreviousPage)];
-        _nextButton = [[UIBarButtonItem alloc] initWithImage:nextButtonImage style:UIBarButtonItemStylePlain target:self action:@selector(gotoNextPage)];
-//    }
+    if (_customToolbar) {
+        _toolbar = _customToolbar;
+    }
+
 //    if (self.displayActionButton) {
         _actionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(actionButtonPressed:)];
 //    }
@@ -153,6 +141,8 @@
         [_doneButton setTitleTextAttributes:[NSDictionary dictionary] forState:UIControlStateNormal];
         [_doneButton setTitleTextAttributes:[NSDictionary dictionary] forState:UIControlStateHighlighted];
         self.navigationItem.rightBarButtonItem = _doneButton;
+    } else if (_hasBelongedToViewController) {
+        
     } else {
         // We're not first so show back button
         UIViewController *previousViewController = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
@@ -169,58 +159,58 @@
         previousViewController.navigationItem.backBarButtonItem = newBackButton;
     }
     
-    // Toolbar items
-    BOOL hasItems = NO;
-    UIBarButtonItem *fixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil];
-    fixedSpace.width = 32; // To balance action button
-    UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    NSMutableArray *items = [[NSMutableArray alloc] init];
-    
-    // Left button - Grid
-//    if (_enableGrid) {
+//    // Toolbar items
+//    BOOL hasItems = NO;
+//    UIBarButtonItem *fixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil];
+//    fixedSpace.width = 32; // To balance action button
+//    UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+//    NSMutableArray *items = [[NSMutableArray alloc] init];
+//    
+//    // Left button - Grid
+////    if (_enableGrid) {
+////        hasItems = YES;
+////        [items addObject:[[UIBarButtonItem alloc] initWithImage:[UIImage imageForResourcePath:@"MWPhotoBrowser.bundle/UIBarButtonItemGrid" ofType:@"png" inBundle:[NSBundle bundleForClass:[self class]]] style:UIBarButtonItemStylePlain target:self action:@selector(showGridAnimated)]];
+////    } else {
+//        [items addObject:fixedSpace];
+////    }
+//    
+//    // Middle - Nav
+//    if (_previousButton && _nextButton && numberOfPhotos > 1) {
 //        hasItems = YES;
-//        [items addObject:[[UIBarButtonItem alloc] initWithImage:[UIImage imageForResourcePath:@"MWPhotoBrowser.bundle/UIBarButtonItemGrid" ofType:@"png" inBundle:[NSBundle bundleForClass:[self class]]] style:UIBarButtonItemStylePlain target:self action:@selector(showGridAnimated)]];
+//        [items addObject:flexSpace];
+//        [items addObject:_previousButton];
+//        [items addObject:flexSpace];
+//        [items addObject:_nextButton];
+//        [items addObject:flexSpace];
 //    } else {
-        [items addObject:fixedSpace];
+//        [items addObject:flexSpace];
 //    }
-    
-    // Middle - Nav
-    if (_previousButton && _nextButton && numberOfPhotos > 1) {
-        hasItems = YES;
-        [items addObject:flexSpace];
-        [items addObject:_previousButton];
-        [items addObject:flexSpace];
-        [items addObject:_nextButton];
-        [items addObject:flexSpace];
-    } else {
-        [items addObject:flexSpace];
-    }
-    
-    // Right - Action
-    if (_actionButton && !(!hasItems && !self.navigationItem.rightBarButtonItem)) {
-        [items addObject:_actionButton];
-    } else {
-        // We're not showing the toolbar so try and show in top right
-        if (_actionButton)
-            self.navigationItem.rightBarButtonItem = _actionButton;
-        [items addObject:fixedSpace];
-    }
-    
-    // Toolbar visibility
-    [_toolbar setItems:items];
-    BOOL hideToolbar = YES;
-    for (UIBarButtonItem* item in _toolbar.items) {
-        if (item != fixedSpace && item != flexSpace) {
-            hideToolbar = NO;
-            break;
-        }
-    }
-    if (hideToolbar) {
-        [_toolbar removeFromSuperview];
-    } else {
-        [self.view addSubview:_toolbar];
-    }
-    
+//    
+//    // Right - Action
+//    if (_actionButton && !(!hasItems && !self.navigationItem.rightBarButtonItem)) {
+//        [items addObject:_actionButton];
+//    } else {
+//        // We're not showing the toolbar so try and show in top right
+//        if (_actionButton)
+//            self.navigationItem.rightBarButtonItem = _actionButton;
+//        [items addObject:fixedSpace];
+//    }
+//    
+//    // Toolbar visibility
+//    [_toolbar setItems:items];
+//    BOOL hideToolbar = YES;
+//    for (UIBarButtonItem* item in _toolbar.items) {
+//        if (item != fixedSpace && item != flexSpace) {
+//            hideToolbar = NO;
+//            break;
+//        }
+//    }
+//    if (hideToolbar) {
+//        [_toolbar removeFromSuperview];
+//    } else {
+//        [self.view addSubview:_toolbar];
+//    }
+//    
     // Update nav
     [self updateNavigation];
     
@@ -481,20 +471,6 @@
     return photo;
 }
 
-- (MWCaptionView *)captionViewForPhotoAtIndex:(NSUInteger)index {
-    MWCaptionView *captionView = nil;
-    if ([_delegate respondsToSelector:@selector(photoBrowser:captionViewForPhotoAtIndex:)]) {
-        captionView = [_delegate photoBrowser:self captionViewForPhotoAtIndex:index];
-    } else {
-        id <MWPhoto> photo = [self photoAtIndex:index];
-        if ([photo respondsToSelector:@selector(caption)]) {
-            if ([photo caption]) captionView = [[MWCaptionView alloc] initWithPhoto:photo];
-        }
-    }
-    captionView.alpha = [self areControlsHidden] ? 0 : 1; // Initial alpha
-    return captionView;
-}
-
 - (BOOL)photoIsSelectedAtIndex:(NSUInteger)index {
     BOOL value = NO;
     if ([self.delegate respondsToSelector:@selector(photoBrowser:isPhotoSelectedAtIndex:)]) {
@@ -613,14 +589,6 @@
             
             [_pagingScrollView addSubnode:page];
             DDLogDebug(@"Added page at index %lu", (unsigned long)index);
-            
-            // Add caption
-//            MWCaptionView *captionView = [self captionViewForPhotoAtIndex:index];
-//            if (captionView) {
-//                captionView.frame = [self frameForCaptionView:captionView atIndex:index];
-//                [_pagingScrollView addSubview:captionView];
-//                page.captionView = captionView;
-//            }
             
             // Add play button if needed
             if (page.displayingVideo) {

@@ -61,6 +61,7 @@
 		AA6982371F61275F00BCF551 /* AIQUIFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6982361F61275F00BCF551 /* AIQUIFactory.m */; };
 		AA69823A1F613BA900BCF551 /* AIQNetWorkSatusManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6982391F613BA900BCF551 /* AIQNetWorkSatusManager.m */; };
 		AA69823D1F614D6500BCF551 /* AIQAppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AA69823C1F614D6500BCF551 /* AIQAppManager.m */; };
+		AA72F32D1F67B52800D0AD6A /* AIQImageStore.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72F32C1F67B52800D0AD6A /* AIQImageStore.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -176,6 +177,8 @@
 		AA6982391F613BA900BCF551 /* AIQNetWorkSatusManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIQNetWorkSatusManager.m; sourceTree = "<group>"; };
 		AA69823B1F614D6500BCF551 /* AIQAppManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIQAppManager.h; sourceTree = "<group>"; };
 		AA69823C1F614D6500BCF551 /* AIQAppManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIQAppManager.m; sourceTree = "<group>"; };
+		AA72F32B1F67B52800D0AD6A /* AIQImageStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIQImageStore.h; sourceTree = "<group>"; };
+		AA72F32C1F67B52800D0AD6A /* AIQImageStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIQImageStore.m; sourceTree = "<group>"; };
 		F2F8859DA1C511A9DA343C24 /* Pods-Anniversary.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Anniversary.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Anniversary/Pods-Anniversary.debug.xcconfig"; sourceTree = "<group>"; };
 		F66CDCFBECC55C317BA7F13D /* Pods-Anniversary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Anniversary.release.xcconfig"; path = "Pods/Target Support Files/Pods-Anniversary/Pods-Anniversary.release.xcconfig"; sourceTree = "<group>"; };
 		FB53C11A9894F739894CD0B3 /* libPods-Anniversary.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Anniversary.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -334,6 +337,8 @@
 			children = (
 				AA6981C61F59116400BCF551 /* AIQSQLService.h */,
 				AA6981C71F59116400BCF551 /* AIQSQLService.m */,
+				AA72F32B1F67B52800D0AD6A /* AIQImageStore.h */,
+				AA72F32C1F67B52800D0AD6A /* AIQImageStore.m */,
 			);
 			path = Store;
 			sourceTree = "<group>";
@@ -712,6 +717,7 @@
 				AA6982251F5D05C900BCF551 /* AIQCollectionViewCell.m in Sources */,
 				AA6982061F595CD800BCF551 /* UIImage+MWPhotoBrowser.m in Sources */,
 				AA29414F1F629E8500A2378E /* UIViewController+Extension.m in Sources */,
+				AA72F32D1F67B52800D0AD6A /* AIQImageStore.m in Sources */,
 				47009A471F618CA4007206C3 /* AIQAlbumBrowser.m in Sources */,
 				AA6982151F5CF40300BCF551 /* AIQTableViewController.m in Sources */,
 				AA6981D71F59234100BCF551 /* CGUtilities.m in Sources */,

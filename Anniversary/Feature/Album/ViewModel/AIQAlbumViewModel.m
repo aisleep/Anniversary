@@ -16,6 +16,9 @@ static CGFloat OriginalImageMaximumSize = 5000;
 
 @property (nonatomic, assign) CGSize thumbnailsSize;
 
+@property (nonatomic, strong) NSMutableSet *selectPhotoLocalIdentifierSet;
+@property (nonatomic, strong) NSMutableArray<AIQPhoto *> *selectPhotosArray;
+
 @end
 
 @implementation AIQAlbumViewModel
@@ -24,6 +27,8 @@ static CGFloat OriginalImageMaximumSize = 5000;
     self = [super init];
     if (self) {
         _thumbnailsSize = thumbnailSize;
+        _selectPhotoLocalIdentifierSet = [NSMutableSet set];
+        _selectPhotosArray = [NSMutableArray array];
     }
     return self;;
 }
@@ -68,6 +73,56 @@ static CGFloat OriginalImageMaximumSize = 5000;
     }];
 }
 
+- (void)selectPhotoAtIndex:(NSUInteger)index {
+    AIQPhoto *photo = [self photoInOriginalImageAtIndex:index isSelected:NULL];
+    if (!photo) {
+        return;
+    }
+    [_selectPhotosArray addObject:photo];
+    [_selectPhotoLocalIdentifierSet addObject:photo.localIdentifier];
+}
+
+- (BOOL)isPhotoSelectedAtIndex:(NSUInteger)index {
+    BOOL isSelected = NO;
+    [self photoInOriginalImageAtIndex:index isSelected:&isSelected];
+    return isSelected;
+}
+
+- (void)removeSelectedPhotoAtIndex:(NSUInteger)index {
+    BOOL isSelected = NO;
+    AIQPhoto *photo = [self photoInOriginalImageAtIndex:index isSelected:&isSelected];
+    if (!isSelected) {
+        return;
+    }
+    
+    __block NSInteger selectedIndex = NSNotFound;
+    [_selectPhotosArray enumerateObjectsUsingBlock:^(AIQPhoto * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj.localIdentifier isEqualToString:photo.localIdentifier]) {
+            selectedIndex = idx;
+            *stop = YES;
+        }
+    }];
+    if (selectedIndex != NSNotFound) {
+        [_selectPhotosArray removeObjectAtIndex:selectedIndex];
+    }
+}
+
+- (AIQPhoto *)photoInOriginalImageAtIndex:(NSUInteger)index isSelected:(BOOL *)isSelected {
+    if (index >= _numberOfPhoto) {
+        if (isSelected) {
+            *isSelected = NO;
+        }
+        return nil;
+    }
+    AIQPhoto *photo = [_originalImageForSelectedAlbum objectAtIndex:index];
+    if (isSelected) {
+        *isSelected = [_selectPhotoLocalIdentifierSet containsObject:photo.localIdentifier];
+    }
+    return photo;
+}
+
+#pragma mark - Clear Cache
+
 - (void)unloadPhotoImages {
     [_thumbnailsForSelectedAlbum enumerateObjectsUsingBlock:^(AIQPhoto * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [obj unloadUnderlyingImage];
@@ -75,25 +130,6 @@ static CGFloat OriginalImageMaximumSize = 5000;
     [_originalImageForSelectedAlbum enumerateObjectsUsingBlock:^(AIQPhoto * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [obj unloadUnderlyingImage];
     }];
-}
-
-#pragma mark - AIQAlbumBrowserDataSource
-- (NSUInteger)numberOfPhotosInPhotoBrowser:(AIQAlbumBrowser *)photoBrowser {
-    return _numberOfPhoto;
-}
-
-- (id<MWPhoto>)photoBrowser:(AIQAlbumBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
-    if (index < _originalImageForSelectedAlbum.count) {
-        return [_originalImageForSelectedAlbum objectAtIndex:index];
-    }
-    return nil;
-}
-
-- (id<MWPhoto>)photoBrowser:(AIQAlbumBrowser *)photoBrowser thumbPhotoAtIndex:(NSUInteger)index {
-    if (index < _thumbnailsForSelectedAlbum.count) {
-        return [_thumbnailsForSelectedAlbum objectAtIndex:index];
-    }
-    return nil;
 }
 
 @end
